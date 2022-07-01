@@ -9,15 +9,23 @@ import React from "react";
 import COLORS from "../helpers/colors";
 import { useNavigation } from "@react-navigation/native";
 import LogoContainer from "./LogoContainer";
+import { useSelector } from "react-redux";
+
 
 const UserProfile = ({ route }) => {
    const navigation = useNavigation();
    const uName = route.params;
 
+   const loginRedux = useSelector((state) => state.login.isLogged);
+
+   console.warn(loginRedux, 'lr')
+
    return (
       <ScrollView style={styles.container}>
          <View style={styles.subContainer}>
          <LogoContainer />
+         {loginRedux && (
+            <>
             <View style={styles.header}>
                <Text style={styles.text}>Profile</Text>
                <TouchableOpacity
@@ -31,6 +39,9 @@ const UserProfile = ({ route }) => {
                Welcome, <Text style={styles.innerText}>{uName.username}</Text>
             </Text>
             <Text>You are now logged in!</Text>
+            </>
+         )
+         }
          </View>
       </ScrollView>
    );

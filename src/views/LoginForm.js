@@ -12,7 +12,6 @@ import Airtable from "airtable";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import COLORS from "../helpers/colors";
-import Loader from "../components/Loader";
 import LogoContainer from "./LogoContainer";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(

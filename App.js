@@ -4,12 +4,22 @@ import LoginForm from "./src/views/LoginForm";
 import UserProfile from "./src/views/UserProfile";
 import RegisterForm from "./src/views/RegisterForm";
 import Home from "./src/views/Home";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import loginReducer from "./src/reducers/login";
 
 const Stack = createNativeStackNavigator();
 
+const store = configureStore({
+   reducer: {
+      login: loginReducer,
+   },
+});
+
 export default function App() {
    return (
-      <NavigationContainer>
+      <Provider store={store}>
+         <NavigationContainer>
             <Stack.Navigator
                initialRouteName="Home"
                screenOptions={{ headerShown: true }}
@@ -20,5 +30,6 @@ export default function App() {
                <Stack.Screen name="UserProfile" component={UserProfile} />
             </Stack.Navigator>
          </NavigationContainer>
+      </Provider>
    );
 }
