@@ -9,13 +9,14 @@ import {
    Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Airtable from "airtable";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import COLORS from "../helpers/colors";
 import LogoContainer from "./LogoContainer";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/login";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
@@ -42,22 +43,26 @@ const LoginForm = () => {
    }, []);
 
    const submitHandler = () => {
-      if (username.length === 0 || password.length === 0) {
+      let trimmedUsername = username.trim();
+      let trimmedPassword = password.trim();
+
+      if (trimmedUsername.length === 0 || trimmedPassword.length === 0) {
          Alert.alert("Username and password should not be empty!");
          return;
       }
 
       const usernameFound = items.find(
-         (item) => item.fields.Name.toLowerCase() === username.toLowerCase()
+         (item) =>
+            item.fields.Name.toLowerCase() === trimmedUsername.toLowerCase()
       );
       const passwordFound = items.find(
-         (itemP) => itemP.fields.Password === password
+         (itemP) => itemP.fields.Password === trimmedPassword
       );
 
       if (usernameFound !== undefined && passwordFound !== undefined) {
          setUsername("");
          setPassword("");
-         dispatch(login(username));
+         dispatch(login(trimmedUsername));
          navigation.navigate("UserProfile");
       } else {
          Alert.alert("Username or password is incorrent!");
@@ -101,6 +106,14 @@ const LoginForm = () => {
                      >
                         <Text style={styles.link}>Create a new account</Text>
                      </TouchableOpacity>
+                     <TouchableOpacity
+                        onPress={() => navigation.navigate("Home")}
+                     >
+                        <Text style={styles.homelink}>
+                           <Icon style={styles.iconStyle} name="home" />
+                           Homepage
+                        </Text>
+                     </TouchableOpacity>
                   </View>
                </ScrollView>
             </KeyboardAvoidingView>
@@ -133,6 +146,21 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline",
       fontSize: 15,
       textTransform: "uppercase",
+   },
+   iconStyle: {
+      color: COLORS.white,
+      fontSize: 20,
+   },
+   homelink: {
+      color: COLORS.white,
+      backgroundColor: COLORS.darkBlue,
+      marginTop: 20,
+      padding: 10,
+      fontSize: 15,
+      textTransform: "uppercase",
+      textAlign: "center",
+      alignItems: "center",
+      fontWeight: "bold",
    },
 });
 

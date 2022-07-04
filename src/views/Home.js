@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
    ScrollView,
@@ -6,13 +5,13 @@ import {
    Text,
    TouchableOpacity,
    View,
-   StatusBar
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/native";
-import COLORS from "../helpers/colors";
-import LogoContainer from "./LogoContainer";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import LogoContainer from "./LogoContainer";
+import COLORS from "../helpers/colors";
+import Copyright from "./Copyright";
 
 const Home = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
@@ -39,10 +38,10 @@ const Home = () => {
             </View>
             <Text style={styles.description}>
                Chweb è un'azienda leader nello sviluppo web, specializzata nello
-               sviluppo di soluzioni software di frontend , backend e mobile. Un
+               sviluppo di soluzioni software di frontend, backend e mobile. Un
                team giovane e appassionato di tecnologia che lavora per
                garantire la miglior User Experience grazie alle competenze di
-               sviluppo di interfacce Web e Mobile . I nostri developer sono
+               sviluppo di interfacce Web e Mobile. I nostri developer sono
                professionisti sempre aggiornati sulle ultime tecnologie in grado
                di sviluppare soluzioni con diversi gradi di complessità. Sono
                problem solver flessibili e attenti al dettaglio.
@@ -63,6 +62,7 @@ const Home = () => {
                   </TouchableOpacity>
                </>
             )}
+            <Copyright />
          </View>
       </ScrollView>
    );
@@ -72,22 +72,23 @@ export default Home;
 
 const styles = StyleSheet.create({
    container: {
-      justifyContent: 'flex-start',
-      backgroundColor: "#fff"
+      justifyContent: "flex-start",
+      backgroundColor: "#fff",
+      height: "100%",
    },
    subContainer: {
       flex: 1,
-      paddingHorizontal: 20
+      paddingHorizontal: 20,
    },
    home: {
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center"
+      alignItems: "center",
    },
    text: {
       color: COLORS.blue,
       fontWeight: "bold",
-      fontSize: 30
+      fontSize: 30,
    },
    profile: {
       backgroundColor: COLORS.blue,
@@ -95,26 +96,28 @@ const styles = StyleSheet.create({
       alignItems: "center",
       width: 50,
       height: 50,
-      borderRadius: 25
+      borderRadius: 25,
    },
    profileIcon: {
       color: COLORS.white,
-      fontSize: 30
+      fontSize: 30,
    },
    description: {
       color: COLORS.darkBlue,
       backgroundColor: COLORS.lightBlue,
       marginVertical: 20,
-      padding: 10
+      padding: 10,
+      fontSize: 16,
+      textAlign: "justify",
    },
    touch: {
-      alignItems: "center"
+      alignItems: "center",
    },
    link: {
       color: COLORS.darkBlue,
       textDecorationLine: "underline",
       textTransform: "uppercase",
       fontSize: 15,
-      padding: 10
+      padding: 10,
    },
 });

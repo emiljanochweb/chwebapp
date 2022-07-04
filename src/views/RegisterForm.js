@@ -10,13 +10,14 @@ import {
    Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Airtable from "airtable";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import COLORS from "../helpers/colors";
-import Airtable from "airtable";
 import LogoContainer from "./LogoContainer";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/login";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
@@ -46,38 +47,67 @@ const RegisterForm = () => {
       Keyboard.dismiss();
       let isValid = true;
 
+      let trimmedUsername = username.trim();
+      let trimmedPassword = password.trim();
+      let trimmedConfirmPassword = confirmPassword.trim();
+
+      const uppercaseRegExp = /(?=.*?[A-Z])/;
+      const lowercaseRegExp = /(?=.*?[a-z])/;
+      const digitsRegExp = /(?=.*?[0-9])/;
+      const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+      const minLengthRegExp = /.{8,}/;
+
+      const uppercasePassword = uppercaseRegExp.test(trimmedPassword);
+      const lowercasePassword = lowercaseRegExp.test(trimmedPassword);
+      const digitsPassword = digitsRegExp.test(trimmedPassword);
+      const specialCharPassword = specialCharRegExp.test(trimmedPassword);
+      const minLengthPassword = minLengthRegExp.test(trimmedPassword);
+
       const usernameFound = items.find(
-         (item) => item.fields.Name.toLowerCase() === username.toLowerCase()
+         (item) =>
+            item.fields.Name.toLowerCase() === trimmedUsername.toLowerCase()
       );
 
       if (
-         username.length === 0 ||
-         password.length === 0 ||
-         confirmPassword.length === 0
+         trimmedUsername.length === 0 ||
+         trimmedPassword.length === 0 ||
+         trimmedConfirmPassword.length === 0
       ) {
          Alert.alert("Fields should not be empty!");
          isValid = false;
-      } else if (username.length < 3) {
+      } else if (trimmedUsername.length < 3) {
          Alert.alert("Username is too short!");
          isValid = false;
       } else if (usernameFound !== undefined) {
          Alert.alert("This user is already registered!");
          isValid = false;
-      } else if (password.length < 12) {
+      } else if (trimmedPassword.length < 12) {
          Alert.alert("Password is too short!");
          isValid = false;
-      } else if (password !== confirmPassword) {
+      } else if (!uppercasePassword) {
+         Alert.alert("Password should have at least one uppercase!");
+         isValid = false;
+      } else if (!lowercasePassword) {
+         Alert.alert("Password should have at least one lowercase!");
+         isValid = false;
+      } else if (!digitsPassword) {
+         Alert.alert("Password should have at least one digit!");
+         isValid = false;
+      } else if (!specialCharPassword) {
+         Alert.alert("Password should have at least one special character!");
+         isValid = false;
+      } else if (trimmedPassword !== trimmedConfirmPassword) {
          Alert.alert("Password don't match!");
          isValid = false;
       }
 
       if (isValid) {
          base("Users").create({
-            Name: username.toLowerCase(),
-            Password: password,
+            Name: trimmedUsername.toLowerCase(),
+            Password: trimmedPassword,
          });
 
-         dispatch(login(username));
+         dispatch(login(trimmedUsername));
          setUsername("");
          setPassword("");
          setConfirmPassword("");
@@ -130,6 +160,14 @@ const RegisterForm = () => {
                            Already have an account? Login
                         </Text>
                      </TouchableOpacity>
+                     <TouchableOpacity
+                        onPress={() => navigation.navigate("Home")}
+                     >
+                        <Text style={styles.homelink}>
+                           <Icon style={styles.iconStyle} name="home" />
+                           Homepage
+                        </Text>
+                     </TouchableOpacity>
                   </View>
                </ScrollView>
             </KeyboardAvoidingView>
@@ -162,6 +200,21 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline",
       textTransform: "uppercase",
       padding: 10,
+   },
+   iconStyle: {
+      color: COLORS.white,
+      fontSize: 20,
+   },
+   homelink: {
+      color: COLORS.white,
+      backgroundColor: COLORS.darkBlue,
+      marginTop: 20,
+      padding: 10,
+      fontSize: 15,
+      textTransform: "uppercase",
+      textAlign: "center",
+      alignItems: "center",
+      fontWeight: "bold",
    },
 });
 

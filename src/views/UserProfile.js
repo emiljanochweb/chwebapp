@@ -6,10 +6,10 @@ import {
    TouchableOpacity,
 } from "react-native";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
 
@@ -46,12 +46,15 @@ const UserProfile = () => {
                )}
             </View>
             <Text>
-               Welcome, <Text style={styles.innerText}>{username ? capitalizeUsername(username) : "User"} </Text>
+               Welcome,{" "}
+               <Text style={styles.innerText}>
+                  {username ? capitalizeUsername(username) : "User"}{" "}
+               </Text>
             </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                <Text style={styles.homelink}>
                   <Icon style={styles.iconStyle} name="home" />
-                  Go to homepage
+                  Homepage
                </Text>
             </TouchableOpacity>
          </View>
@@ -61,10 +64,12 @@ const UserProfile = () => {
 
 const styles = StyleSheet.create({
    container: {
-      backgroundColor: "#fff"
+      flex: 1,
+      backgroundColor: "#fff",
    },
    subContainer: {
-      padding: 20
+      padding: 20,
+      flex: 1,
    },
    header: {
       flexDirection: "row",
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
    },
    linkText: {
       color: COLORS.white,
-      fontWeight: 'bold',
+      fontWeight: "bold",
       fontSize: 15,
       textTransform: "uppercase",
    },
@@ -109,8 +114,8 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textTransform: "uppercase",
       textAlign: "center",
-      alignItems: 'center',
-      fontWeight: 'bold'
+      alignItems: "center",
+      fontWeight: "bold",
    },
 });
 
