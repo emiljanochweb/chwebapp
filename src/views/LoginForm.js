@@ -5,6 +5,7 @@ import {
    TouchableOpacity,
    View,
    Alert,
+   KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -13,12 +14,17 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import COLORS from "../helpers/colors";
 import LogoContainer from "./LogoContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../reducers/login";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
 );
 
 const LoginForm = () => {
+   const isLoggedIn = useSelector((state) => state.login.isLogged);
+
+   const dispatch = useDispatch();
    const navigation = useNavigation();
 
    const [username, setUsername] = useState("");
@@ -41,12 +47,15 @@ const LoginForm = () => {
       }
 
       const usernameFound = items.find((item) => item.fields.Name === username);
-      const passwordFound = items.find((itemP) => itemP.fields.Password === password);
+      const passwordFound = items.find(
+         (itemP) => itemP.fields.Password === password
+      );
 
       if (usernameFound !== undefined && passwordFound !== undefined) {
          setUsername("");
          setPassword("");
-         navigation.navigate("UserProfile", { username });
+         dispatch(login(username));
+         navigation.navigate("UserProfile");
       } else {
          Alert.alert("Username or password is incorrent!");
          return;
@@ -54,32 +63,38 @@ const LoginForm = () => {
    };
 
    return (
-      <ScrollView style={styles.container}>
-         <View style={styles.subContainer}>
-         <LogoContainer />
-            <Text style={styles.text}>Login</Text>
-            <Input
-               label="Username"
-               iconName="email-outline"
-               onChangeText={setUsername}
-               value={username}
-            />
-            <Input
-               label="Password"
-               password
-               iconName="lock-outline"
-               onChangeText={setPassword}
-               value={password}
-            />
-            <Button title="LOGIN" onPress={submitHandler} />
-            <TouchableOpacity
-               style={styles.touch}
-               onPress={() => navigation.navigate("RegisterForm")}
-            >
-               <Text style={styles.link}>Create a new account</Text>
-            </TouchableOpacity>
-         </View>
-      </ScrollView>
+      !isLoggedIn && (
+         <>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+               <ScrollView style={styles.container}>
+                  <View style={styles.subContainer}>
+                     <LogoContainer />
+                     <Text style={styles.text}>Login</Text>
+                     <Input
+                        label="Username"
+                        iconName="email-outline"
+                        onChangeText={setUsername}
+                        value={username}
+                     />
+                     <Input
+                        label="Password"
+                        password
+                        iconName="lock-outline"
+                        onChangeText={setPassword}
+                        value={password}
+                     />
+                     <Button title="LOGIN" onPress={submitHandler} />
+                     <TouchableOpacity
+                        style={styles.touch}
+                        onPress={() => navigation.navigate("RegisterForm")}
+                     >
+                        <Text style={styles.link}>Create a new account</Text>
+                     </TouchableOpacity>
+                  </View>
+               </ScrollView>
+            </KeyboardAvoidingView>
+         </>
+      )
    );
 };
 

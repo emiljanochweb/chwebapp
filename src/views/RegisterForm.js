@@ -5,7 +5,8 @@ import {
    TouchableOpacity,
    ScrollView,
    Alert,
-   Keyboard
+   Keyboard,
+   KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -14,12 +15,17 @@ import Button from "../components/Button";
 import COLORS from "../helpers/colors";
 import Airtable from "airtable";
 import LogoContainer from "./LogoContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../reducers/login";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
 );
 
 const RegisterForm = () => {
+   const isLoggedIn = useSelector((state) => state.login.isLogged);
+
+   const dispatch = useDispatch();
    const navigation = useNavigation();
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
@@ -47,53 +53,62 @@ const RegisterForm = () => {
          isValid = false;
       }
 
-      if(isValid){
+      if (isValid) {
          base("Users").create({
             Name: username,
             Password: password,
          });
-   
+
+         dispatch(login(username));
          setUsername("");
          setPassword("");
          setConfirmPassword("");
-         navigation.navigate("UserProfile", { username });
+         navigation.navigate("UserProfile");
       }
    };
 
    return (
-      <ScrollView style={styles.container}>
-         <View style={styles.subContainer}>
-         <LogoContainer />
-            <Text style={styles.text}>Register</Text>
-            <Input
-               label="Username"
-               iconName="email-outline"
-               onChangeText={setUsername}
-               value={username}
-            />
-            <Input
-               label="Password"
-               password
-               iconName="lock-outline"
-               onChangeText={setPassword}
-               value={password}
-            />
-            <Input
-               label="Confirm Password"
-               password
-               iconName="lock-outline"
-               onChangeText={setConfirmPassword}
-               value={confirmPassword}
-            />
-            <Button title="REGISTER" onPress={submitHandler} />
-            <TouchableOpacity
-               style={styles.touch}
-               onPress={() => navigation.navigate("LoginForm")}
-            >
-               <Text style={styles.link}>Already have an account? Login</Text>
-            </TouchableOpacity>
-         </View>
-      </ScrollView>
+      !isLoggedIn && (
+         <>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+               <ScrollView style={styles.container}>
+                  <View style={styles.subContainer}>
+                     <LogoContainer />
+                     <Text style={styles.text}>Register</Text>
+                     <Input
+                        label="Username"
+                        iconName="email-outline"
+                        onChangeText={setUsername}
+                        value={username}
+                     />
+                     <Input
+                        label="Password"
+                        password
+                        iconName="lock-outline"
+                        onChangeText={setPassword}
+                        value={password}
+                     />
+                     <Input
+                        label="Confirm Password"
+                        password
+                        iconName="lock-outline"
+                        onChangeText={setConfirmPassword}
+                        value={confirmPassword}
+                     />
+                     <Button title="REGISTER" onPress={submitHandler} />
+                     <TouchableOpacity
+                        style={styles.touch}
+                        onPress={() => navigation.navigate("LoginForm")}
+                     >
+                        <Text style={styles.link}>
+                           Already have an account? Login
+                        </Text>
+                     </TouchableOpacity>
+                  </View>
+               </ScrollView>
+            </KeyboardAvoidingView>
+         </>
+      )
    );
 };
 

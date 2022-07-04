@@ -1,6 +1,5 @@
 import React from "react";
 import {
-   Image,
    ScrollView,
    StyleSheet,
    Text,
@@ -9,10 +8,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../helpers/colors";
-import Loader from "../components/Loader";
 import LogoContainer from "./LogoContainer";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+   const isLoggedIn = useSelector((state) => state.login.isLogged);
    const navigation = useNavigation();
 
    return (
@@ -30,12 +30,29 @@ const Home = () => {
                di sviluppare soluzioni con diversi gradi di complessità. Sono
                problem solver flessibili e attenti al dettaglio.
             </Text>
-            <TouchableOpacity
-               style={styles.touch}
-               onPress={() => navigation.navigate("RegisterForm")}
-            >
-               <Text style={styles.link}>Register now</Text>
-            </TouchableOpacity>
+            {isLoggedIn ? (
+               <TouchableOpacity
+                  style={styles.touch}
+                  onPress={() => navigation.navigate("UserProfile")}
+               >
+                  <Text style={styles.link}>Profile</Text>
+               </TouchableOpacity>
+            ) : (
+               <>
+                  <TouchableOpacity
+                     style={styles.touch}
+                     onPress={() => navigation.navigate("LoginForm")}
+                  >
+                     <Text style={styles.link}>Login</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                     style={styles.touch}
+                     onPress={() => navigation.navigate("RegisterForm")}
+                  >
+                     <Text style={styles.link}>Register</Text>
+                  </TouchableOpacity>
+               </>
+            )}
          </View>
       </ScrollView>
    );

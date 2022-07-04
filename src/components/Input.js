@@ -46,6 +46,7 @@ const Input = ({
           onChangeText={onChangeText}
           value={value}
           style={{color: COLORS.darkBlue, flex: 1}}
+          placeholder={label}
           {...props}
         />
         {password && (

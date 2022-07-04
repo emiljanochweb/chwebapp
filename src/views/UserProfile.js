@@ -8,40 +8,41 @@ import {
 import React from "react";
 import COLORS from "../helpers/colors";
 import { useNavigation } from "@react-navigation/native";
-import LogoContainer from "./LogoContainer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../reducers/login";
 
-
-const UserProfile = ({ route }) => {
+const UserProfile = () => {
    const navigation = useNavigation();
-   const uName = route.params;
+   const dispatch = useDispatch();
 
-   const loginRedux = useSelector((state) => state.login.isLogged);
-
-   console.warn(loginRedux, 'lr')
+   const isLoggedIn = useSelector((state) => state.login.isLogged);
+   const username = useSelector((state) => state.login.user);
 
    return (
       <ScrollView style={styles.container}>
          <View style={styles.subContainer}>
-         <LogoContainer />
-         {loginRedux && (
-            <>
             <View style={styles.header}>
                <Text style={styles.text}>Profile</Text>
-               <TouchableOpacity
-                  style={styles.touch}
-                  onPress={() => navigation.navigate("Home")}
-               >
-                  <Text style={styles.link}>Logout</Text>
-               </TouchableOpacity>
+               {isLoggedIn && (
+                  <TouchableOpacity
+                     style={styles.touch}
+                     onPress={() => {
+                        dispatch(logout());
+                        navigation.navigate("Home");
+                     }
+                  }
+                  >
+                     <Text style={styles.link}>Logout</Text>
+                  </TouchableOpacity>
+               )}
             </View>
-            <Text>
-               Welcome, <Text style={styles.innerText}>{uName.username}</Text>
-            </Text>
-            <Text>You are now logged in!</Text>
-            </>
-         )
-         }
+            <Text>Welcome, {username ? username : 'User'}</Text>
+            {isLoggedIn && <Text>You are now logged in!</Text>}
+            <TouchableOpacity
+               onPress={() => navigation.navigate("Home")}
+            >
+               <Text style={styles.homelink}>Go to homepage</Text>
+            </TouchableOpacity>
          </View>
       </ScrollView>
    );
@@ -79,6 +80,15 @@ const styles = StyleSheet.create({
       textDecorationLine: "underline",
       fontSize: 15,
       textTransform: "uppercase",
+   },
+   homelink: {
+      color: COLORS.white,
+      backgroundColor: COLORS.darkBlue,
+      marginTop: 20,
+      padding: 10,
+      fontSize: 15,
+      textTransform: "uppercase",
+      textAlign: 'center'
    },
 });
 
