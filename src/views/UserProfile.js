@@ -6,10 +6,12 @@ import {
    TouchableOpacity,
 } from "react-native";
 import React from "react";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/login";
+import LogoContainer from "./LogoContainer";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -18,8 +20,13 @@ const UserProfile = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
    const username = useSelector((state) => state.login.user);
 
+   const capitalizeUsername = (str) => {
+      return str[0].toUpperCase() + str.slice(1);
+   };
+
    return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
+         <LogoContainer />
          <View style={styles.subContainer}>
             <View style={styles.header}>
                <Text style={styles.text}>Profile</Text>
@@ -29,19 +36,23 @@ const UserProfile = () => {
                      onPress={() => {
                         dispatch(logout());
                         navigation.navigate("Home");
-                     }
-                  }
+                     }}
                   >
-                     <Text style={styles.link}>Logout</Text>
+                     <View style={styles.link}>
+                        <Icon style={styles.iconStyle} name="logout" />
+                        <Text style={styles.linkText}>Logout</Text>
+                     </View>
                   </TouchableOpacity>
                )}
             </View>
-            <Text>Welcome, {username ? username : 'User'}</Text>
-            {isLoggedIn && <Text>You are now logged in!</Text>}
-            <TouchableOpacity
-               onPress={() => navigation.navigate("Home")}
-            >
-               <Text style={styles.homelink}>Go to homepage</Text>
+            <Text>
+               Welcome, <Text style={styles.innerText}>{username ? capitalizeUsername(username) : "User"} </Text>
+            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+               <Text style={styles.homelink}>
+                  <Icon style={styles.iconStyle} name="home" />
+                  Go to homepage
+               </Text>
             </TouchableOpacity>
          </View>
       </ScrollView>
@@ -49,6 +60,12 @@ const UserProfile = () => {
 };
 
 const styles = StyleSheet.create({
+   container: {
+      backgroundColor: "#fff"
+   },
+   subContainer: {
+      padding: 20
+   },
    header: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -56,13 +73,6 @@ const styles = StyleSheet.create({
    },
    innerText: {
       fontWeight: "bold",
-   },
-   container: {
-      flex: 1,
-      backgroundColor: "#fff",
-   },
-   subContainer: {
-      padding: 20,
    },
    text: {
       fontSize: 30,
@@ -74,12 +84,22 @@ const styles = StyleSheet.create({
       alignItems: "center",
    },
    link: {
-      color: COLORS.white,
       backgroundColor: COLORS.red,
       padding: 10,
-      textDecorationLine: "underline",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      minWidth: 120,
+   },
+   linkText: {
+      color: COLORS.white,
+      fontWeight: 'bold',
       fontSize: 15,
       textTransform: "uppercase",
+   },
+   iconStyle: {
+      color: COLORS.white,
+      fontSize: 20,
    },
    homelink: {
       color: COLORS.white,
@@ -88,7 +108,9 @@ const styles = StyleSheet.create({
       padding: 10,
       fontSize: 15,
       textTransform: "uppercase",
-      textAlign: 'center'
+      textAlign: "center",
+      alignItems: 'center',
+      fontWeight: 'bold'
    },
 });
 

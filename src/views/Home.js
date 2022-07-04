@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
    ScrollView,
@@ -5,7 +6,9 @@ import {
    Text,
    TouchableOpacity,
    View,
+   StatusBar
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../helpers/colors";
 import LogoContainer from "./LogoContainer";
@@ -16,10 +19,24 @@ const Home = () => {
    const navigation = useNavigation();
 
    return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
+         <LogoContainer />
          <View style={styles.subContainer}>
-            <LogoContainer />
-            <Text style={styles.text}>Home</Text>
+            <View style={styles.home}>
+               <Text style={styles.text}>Home</Text>
+               {isLoggedIn && (
+                  <TouchableOpacity
+                     onPress={() => navigation.navigate("UserProfile")}
+                  >
+                     <View style={styles.profile}>
+                        <Icon
+                           style={styles.profileIcon}
+                           name="human-greeting-variant"
+                        />
+                     </View>
+                  </TouchableOpacity>
+               )}
+            </View>
             <Text style={styles.description}>
                Chweb è un'azienda leader nello sviluppo web, specializzata nello
                sviluppo di soluzioni software di frontend , backend e mobile. Un
@@ -30,14 +47,7 @@ const Home = () => {
                di sviluppare soluzioni con diversi gradi di complessità. Sono
                problem solver flessibili e attenti al dettaglio.
             </Text>
-            {isLoggedIn ? (
-               <TouchableOpacity
-                  style={styles.touch}
-                  onPress={() => navigation.navigate("UserProfile")}
-               >
-                  <Text style={styles.link}>Profile</Text>
-               </TouchableOpacity>
-            ) : (
+            {!isLoggedIn && (
                <>
                   <TouchableOpacity
                      style={styles.touch}
@@ -62,32 +72,49 @@ export default Home;
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
-      backgroundColor: "#fff",
+      justifyContent: 'flex-start',
+      backgroundColor: "#fff"
    },
    subContainer: {
-      padding: 20,
+      flex: 1,
+      paddingHorizontal: 20
+   },
+   home: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center"
    },
    text: {
-      fontSize: 30,
-      fontWeight: "bold",
-      marginBottom: 10,
       color: COLORS.blue,
+      fontWeight: "bold",
+      fontSize: 30
+   },
+   profile: {
+      backgroundColor: COLORS.blue,
+      justifyContent: "center",
+      alignItems: "center",
+      width: 50,
+      height: 50,
+      borderRadius: 25
+   },
+   profileIcon: {
+      color: COLORS.white,
+      fontSize: 30
    },
    description: {
-      marginBottom: 20,
-      backgroundColor: "#e9ecef",
-      padding: 10,
       color: COLORS.darkBlue,
+      backgroundColor: COLORS.lightBlue,
+      marginVertical: 20,
+      padding: 10
    },
    touch: {
-      alignItems: "center",
+      alignItems: "center"
    },
    link: {
       color: COLORS.darkBlue,
-      padding: 10,
       textDecorationLine: "underline",
-      fontSize: 15,
       textTransform: "uppercase",
+      fontSize: 15,
+      padding: 10
    },
 });

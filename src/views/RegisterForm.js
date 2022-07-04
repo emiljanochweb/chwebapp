@@ -7,8 +7,9 @@ import {
    Alert,
    Keyboard,
    KeyboardAvoidingView,
+   Platform,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -30,10 +31,24 @@ const RegisterForm = () => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const [confirmPassword, setConfirmPassword] = useState("");
+   const [items, setItems] = useState([]);
+
+   useEffect(() => {
+      base("Users")
+         .select({ view: "Grid view" })
+         .eachPage((records, fetchNextPage) => {
+            setItems(records);
+            fetchNextPage();
+         });
+   }, []);
 
    const submitHandler = () => {
       Keyboard.dismiss();
       let isValid = true;
+
+      const usernameFound = items.find(
+         (item) => item.fields.Name.toLowerCase() === username.toLowerCase()
+      );
 
       if (
          username.length === 0 ||
@@ -45,7 +60,10 @@ const RegisterForm = () => {
       } else if (username.length < 3) {
          Alert.alert("Username is too short!");
          isValid = false;
-      } else if (password.length < 8) {
+      } else if (usernameFound !== undefined) {
+         Alert.alert("This user is already registered!");
+         isValid = false;
+      } else if (password.length < 12) {
          Alert.alert("Password is too short!");
          isValid = false;
       } else if (password !== confirmPassword) {
@@ -55,7 +73,7 @@ const RegisterForm = () => {
 
       if (isValid) {
          base("Users").create({
-            Name: username,
+            Name: username.toLowerCase(),
             Password: password,
          });
 
@@ -67,13 +85,21 @@ const RegisterForm = () => {
       }
    };
 
+   const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
+
    return (
       !isLoggedIn && (
          <>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-               <ScrollView style={styles.container}>
+            <KeyboardAvoidingView
+               style={styles.container}
+               behavior="padding"
+               keyboardVerticalOffset={keyboardVerticalOffset}
+            >
+               <ScrollView
+                  contentContainerStyle={{ justifyContent: "flex-start" }}
+               >
+                  <LogoContainer />
                   <View style={styles.subContainer}>
-                     <LogoContainer />
                      <Text style={styles.text}>Register</Text>
                      <Input
                         label="Username"
@@ -115,26 +141,27 @@ const RegisterForm = () => {
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: COLORS.white,
    },
    subContainer: {
-      padding: 20,
+      flex: 1,
+      paddingHorizontal: 20,
    },
    text: {
-      fontSize: 30,
-      fontWeight: "bold",
-      marginBottom: 10,
       color: COLORS.blue,
+      fontWeight: "bold",
+      fontSize: 30,
+      marginBottom: 10,
    },
    touch: {
       alignItems: "center",
    },
    link: {
       color: COLORS.darkBlue,
-      padding: 10,
-      textDecorationLine: "underline",
       fontSize: 15,
+      textDecorationLine: "underline",
       textTransform: "uppercase",
+      padding: 10,
    },
 });
 

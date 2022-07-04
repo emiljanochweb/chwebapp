@@ -6,6 +6,7 @@ import {
    View,
    Alert,
    KeyboardAvoidingView,
+   Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -46,7 +47,9 @@ const LoginForm = () => {
          return;
       }
 
-      const usernameFound = items.find((item) => item.fields.Name === username);
+      const usernameFound = items.find(
+         (item) => item.fields.Name.toLowerCase() === username.toLowerCase()
+      );
       const passwordFound = items.find(
          (itemP) => itemP.fields.Password === password
       );
@@ -62,13 +65,21 @@ const LoginForm = () => {
       }
    };
 
+   const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
+
    return (
       !isLoggedIn && (
          <>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-               <ScrollView style={styles.container}>
+            <KeyboardAvoidingView
+               style={styles.container}
+               behavior="padding"
+               keyboardVerticalOffset={keyboardVerticalOffset}
+            >
+               <ScrollView
+                  contentContainerStyle={{ justifyContent: "flex-start" }}
+               >
+                  <LogoContainer />
                   <View style={styles.subContainer}>
-                     <LogoContainer />
                      <Text style={styles.text}>Login</Text>
                      <Input
                         label="Username"
@@ -101,10 +112,11 @@ const LoginForm = () => {
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: COLORS.white,
    },
    subContainer: {
-      padding: 20,
+      flex: 1,
+      paddingHorizontal: 20,
    },
    text: {
       fontSize: 30,
