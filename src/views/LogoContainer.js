@@ -22,7 +22,7 @@ export default LogoContainer;
 const styles = StyleSheet.create({
    center: {
       alignItems: "center",
-      paddingTop: 35,
+     // paddingTop: 35,
       paddingBottom: 10,
    },
 });

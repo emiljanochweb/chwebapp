@@ -7,6 +7,7 @@ import UserProfile from "./src/views/UserProfile";
 import RegisterForm from "./src/views/RegisterForm";
 import Home from "./src/views/Home";
 import loginReducer from "./src/reducers/login";
+import COLORS from "./src/helpers/colors";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,17 +18,46 @@ const store = configureStore({
 });
 
 export default function App() {
+   const customOptions = (name) => {
+      return {
+         title: name,
+         headerStyle: {
+            backgroundColor: COLORS.blue,
+         },
+         headerTintColor: "#fff",
+         headerTitleStyle: {
+            fontWeight: "bold",
+         },
+      };
+   };
+
    return (
       <Provider store={store}>
          <NavigationContainer>
             <Stack.Navigator
                initialRouteName="Home"
-               screenOptions={{ headerShown: false }}
+               screenOptions={{ headerShown: true }}
             >
-               <Stack.Screen name="Home" component={Home} />
-               <Stack.Screen name="RegisterForm" component={RegisterForm} />
-               <Stack.Screen name="LoginForm" component={LoginForm} />
-               <Stack.Screen name="UserProfile" component={UserProfile} />
+               <Stack.Screen
+                  name="Home"
+                  component={Home}
+                  options={customOptions("Home")}
+               />
+               <Stack.Screen
+                  name="RegisterForm"
+                  component={RegisterForm}
+                  options={customOptions("Register")}
+               />
+               <Stack.Screen
+                  name="LoginForm"
+                  component={LoginForm}
+                  options={customOptions("Login")}
+               />
+               <Stack.Screen
+                  name="UserProfile"
+                  component={UserProfile}
+                  options={customOptions("Profile")}
+               />
             </Stack.Navigator>
          </NavigationContainer>
       </Provider>

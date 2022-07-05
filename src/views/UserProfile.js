@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { logout } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
+import Copyright from "./Copyright";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -25,40 +26,42 @@ const UserProfile = () => {
    };
 
    return (
-      <ScrollView contentContainerStyle={styles.container}>
-         <LogoContainer />
-         <View style={styles.subContainer}>
-            <View style={styles.header}>
-               <Text style={styles.text}>Profile</Text>
-               {isLoggedIn && (
-                  <TouchableOpacity
-                     style={styles.touch}
-                     onPress={() => {
-                        dispatch(logout());
-                        navigation.navigate("Home");
-                     }}
-                  >
-                     <View style={styles.link}>
-                        <Icon style={styles.iconStyle} name="logout" />
-                        <Text style={styles.linkText}>Logout</Text>
-                     </View>
-                  </TouchableOpacity>
-               )}
+      <>
+         <ScrollView contentContainerStyle={styles.container}>
+            <LogoContainer />
+            <View style={styles.subContainer}>
+               <View style={styles.header}>
+                  {isLoggedIn && (
+                     <TouchableOpacity
+                        style={styles.touch}
+                        onPress={() => {
+                           dispatch(logout());
+                           navigation.navigate("Home");
+                        }}
+                     >
+                        <View style={styles.link}>
+                           <Icon style={styles.iconStyle} name="logout" />
+                           <Text style={styles.linkText}>Logout</Text>
+                        </View>
+                     </TouchableOpacity>
+                  )}
+               </View>
+               <Text>
+                  Welcome,{" "}
+                  <Text style={styles.innerText}>
+                     {username ? capitalizeUsername(username) : "User"}{" "}
+                  </Text>
+               </Text>
+               <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                  <Text style={styles.homelink}>
+                     <Icon style={styles.iconStyle} name="home" />
+                     Homepage
+                  </Text>
+               </TouchableOpacity>
             </View>
-            <Text>
-               Welcome,{" "}
-               <Text style={styles.innerText}>
-                  {username ? capitalizeUsername(username) : "User"}{" "}
-               </Text>
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-               <Text style={styles.homelink}>
-                  <Icon style={styles.iconStyle} name="home" />
-                  Homepage
-               </Text>
-            </TouchableOpacity>
-         </View>
-      </ScrollView>
+         </ScrollView>
+         <Copyright />
+      </>
    );
 };
 
@@ -78,12 +81,6 @@ const styles = StyleSheet.create({
    },
    innerText: {
       fontWeight: "bold",
-   },
-   text: {
-      fontSize: 30,
-      fontWeight: "bold",
-      marginBottom: 10,
-      color: COLORS.blue,
    },
    touch: {
       alignItems: "center",

@@ -19,6 +19,7 @@ import Button from "../components/Button";
 import COLORS from "../helpers/colors";
 import LogoContainer from "./LogoContainer";
 import { login } from "../reducers/login";
+import Copyright from "./Copyright";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
@@ -130,7 +131,6 @@ const RegisterForm = () => {
                >
                   <LogoContainer />
                   <View style={styles.subContainer}>
-                     <Text style={styles.text}>Register</Text>
                      <Input
                         label="Username"
                         iconName="email-outline"
@@ -171,6 +171,7 @@ const RegisterForm = () => {
                   </View>
                </ScrollView>
             </KeyboardAvoidingView>
+            <Copyright />
          </>
       )
    );
@@ -184,12 +185,6 @@ const styles = StyleSheet.create({
    subContainer: {
       flex: 1,
       paddingHorizontal: 20,
-   },
-   text: {
-      color: COLORS.blue,
-      fontWeight: "bold",
-      fontSize: 30,
-      marginBottom: 10,
    },
    touch: {
       alignItems: "center",

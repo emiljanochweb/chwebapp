@@ -6,7 +6,7 @@ import COLORS from "../helpers/colors";
 const Copyright = () => {
    return (
       <View style={styles.copy}>
-         <Text style={{color: COLORS.grey}}>
+         <Text style={{ color: COLORS.grey }}>
             Copyright <Icon style={styles.profileIcon} name="copyright" /> Chweb
             Green Room
          </Text>
@@ -17,8 +17,8 @@ const Copyright = () => {
 export default Copyright;
 
 const styles = StyleSheet.create({
-    copy: {
-        alignItems: 'center',
-        marginTop: 50
-    }
+   copy: {
+      alignItems: "center",
+      padding: 5,
+   },
 });

@@ -18,53 +18,55 @@ const Home = () => {
    const navigation = useNavigation();
 
    return (
-      <ScrollView contentContainerStyle={styles.container}>
-         <LogoContainer />
-         <View style={styles.subContainer}>
-            <View style={styles.home}>
-               <Text style={styles.text}>Home</Text>
-               {isLoggedIn && (
-                  <TouchableOpacity
-                     onPress={() => navigation.navigate("UserProfile")}
-                  >
-                     <View style={styles.profile}>
-                        <Icon
-                           style={styles.profileIcon}
-                           name="human-greeting-variant"
-                        />
-                     </View>
-                  </TouchableOpacity>
+      <>
+         <ScrollView contentContainerStyle={styles.container}>
+            <LogoContainer />
+            <View style={styles.subContainer}>
+               <View style={styles.home}>
+                  {isLoggedIn && (
+                     <TouchableOpacity
+                        onPress={() => navigation.navigate("UserProfile")}
+                     >
+                        <View style={styles.profile}>
+                           <Icon
+                              style={styles.profileIcon}
+                              name="human-greeting-variant"
+                           />
+                        </View>
+                     </TouchableOpacity>
+                  )}
+               </View>
+               <Text style={styles.description}>
+                  Chweb è un'azienda leader nello sviluppo web, specializzata
+                  nello sviluppo di soluzioni software di frontend, backend e
+                  mobile. Un team giovane e appassionato di tecnologia che
+                  lavora per garantire la miglior User Experience grazie alle
+                  competenze di sviluppo di interfacce Web e Mobile. I nostri
+                  developer sono professionisti sempre aggiornati sulle ultime
+                  tecnologie in grado di sviluppare soluzioni con diversi gradi
+                  di complessità. Sono problem solver flessibili e attenti al
+                  dettaglio.
+               </Text>
+               {!isLoggedIn && (
+                  <>
+                     <TouchableOpacity
+                        style={styles.touch}
+                        onPress={() => navigation.navigate("LoginForm")}
+                     >
+                        <Text style={styles.link}>Login</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity
+                        style={styles.touch}
+                        onPress={() => navigation.navigate("RegisterForm")}
+                     >
+                        <Text style={styles.link}>Register</Text>
+                     </TouchableOpacity>
+                  </>
                )}
             </View>
-            <Text style={styles.description}>
-               Chweb è un'azienda leader nello sviluppo web, specializzata nello
-               sviluppo di soluzioni software di frontend, backend e mobile. Un
-               team giovane e appassionato di tecnologia che lavora per
-               garantire la miglior User Experience grazie alle competenze di
-               sviluppo di interfacce Web e Mobile. I nostri developer sono
-               professionisti sempre aggiornati sulle ultime tecnologie in grado
-               di sviluppare soluzioni con diversi gradi di complessità. Sono
-               problem solver flessibili e attenti al dettaglio.
-            </Text>
-            {!isLoggedIn && (
-               <>
-                  <TouchableOpacity
-                     style={styles.touch}
-                     onPress={() => navigation.navigate("LoginForm")}
-                  >
-                     <Text style={styles.link}>Login</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={styles.touch}
-                     onPress={() => navigation.navigate("RegisterForm")}
-                  >
-                     <Text style={styles.link}>Register</Text>
-                  </TouchableOpacity>
-               </>
-            )}
-            <Copyright />
-         </View>
-      </ScrollView>
+         </ScrollView>
+         <Copyright />
+      </>
    );
 };
 
@@ -84,11 +86,6 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-   },
-   text: {
-      color: COLORS.blue,
-      fontWeight: "bold",
-      fontSize: 30,
    },
    profile: {
       backgroundColor: COLORS.blue,
