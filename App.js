@@ -28,6 +28,7 @@ export default function App() {
          headerTitleStyle: {
             fontWeight: "bold",
          },
+         
       };
    };
 
@@ -36,7 +37,7 @@ export default function App() {
          <NavigationContainer>
             <Stack.Navigator
                initialRouteName="Home"
-               screenOptions={{ headerShown: true }}
+               screenOptions={{ headerShown: true, gestureEnabled: false, headerLeft: () => <></>,}}
             >
                <Stack.Screen
                   name="Home"

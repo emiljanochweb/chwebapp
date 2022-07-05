@@ -18,7 +18,8 @@ import Button from "../components/Button";
 import COLORS from "../helpers/colors";
 import LogoContainer from "./LogoContainer";
 import { login } from "../reducers/login";
-import Copyright from "./Copyright";
+import { useRoute } from "@react-navigation/native";
+import SubMenu from "./SubMenu";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
@@ -29,6 +30,7 @@ const LoginForm = () => {
 
    const dispatch = useDispatch();
    const navigation = useNavigation();
+   const { name } = useRoute();
 
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
@@ -81,10 +83,8 @@ const LoginForm = () => {
                behavior="padding"
                keyboardVerticalOffset={keyboardVerticalOffset}
             >
-               <ScrollView
-                  contentContainerStyle={{ justifyContent: "flex-start" }}
-               >
-                  <LogoContainer />
+               <ScrollView>
+                  <LogoContainer name={name} />
                   <View style={styles.subContainer}>
                      <Input
                         label="Username"
@@ -106,18 +106,10 @@ const LoginForm = () => {
                      >
                         <Text style={styles.link}>Create a new account</Text>
                      </TouchableOpacity>
-                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Home")}
-                     >
-                        <Text style={styles.homelink}>
-                           <Icon style={styles.iconStyle} name="home" />
-                           Homepage
-                        </Text>
-                     </TouchableOpacity>
                   </View>
                </ScrollView>
             </KeyboardAvoidingView>
-            <Copyright />
+            <SubMenu />
          </>
       )
    );
@@ -131,6 +123,7 @@ const styles = StyleSheet.create({
    subContainer: {
       flex: 1,
       paddingHorizontal: 20,
+      paddingVertical: 25,
    },
    touch: {
       alignItems: "center",

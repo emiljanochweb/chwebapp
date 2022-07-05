@@ -8,34 +8,23 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import LogoContainer from "./LogoContainer";
 import COLORS from "../helpers/colors";
-import Copyright from "./Copyright";
+import SubMenu from "./SubMenu";
 
 const Home = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
+
    const navigation = useNavigation();
+   const {name} = useRoute();
 
    return (
       <>
          <ScrollView contentContainerStyle={styles.container}>
-            <LogoContainer />
+            <LogoContainer name={name} />
             <View style={styles.subContainer}>
-               <View style={styles.home}>
-                  {isLoggedIn && (
-                     <TouchableOpacity
-                        onPress={() => navigation.navigate("UserProfile")}
-                     >
-                        <View style={styles.profile}>
-                           <Icon
-                              style={styles.profileIcon}
-                              name="human-greeting-variant"
-                           />
-                        </View>
-                     </TouchableOpacity>
-                  )}
-               </View>
                <Text style={styles.description}>
                   Chweb è un'azienda leader nello sviluppo web, specializzata
                   nello sviluppo di soluzioni software di frontend, backend e
@@ -65,7 +54,7 @@ const Home = () => {
                )}
             </View>
          </ScrollView>
-         <Copyright />
+         <SubMenu />
       </>
    );
 };
@@ -81,19 +70,7 @@ const styles = StyleSheet.create({
    subContainer: {
       flex: 1,
       paddingHorizontal: 20,
-   },
-   home: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-   },
-   profile: {
-      backgroundColor: COLORS.blue,
-      justifyContent: "center",
-      alignItems: "center",
-      width: 50,
-      height: 50,
-      borderRadius: 25,
+      paddingVertical: 25
    },
    profileIcon: {
       color: COLORS.white,
