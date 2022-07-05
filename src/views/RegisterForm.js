@@ -21,6 +21,7 @@ import LogoContainer from "./LogoContainer";
 import { login } from "../reducers/login";
 import { useRoute } from "@react-navigation/native";
 import SubMenu from "./SubMenu";
+import { keyboardVerticalOffset } from "../helpers/utils";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
@@ -118,8 +119,6 @@ const RegisterForm = () => {
          navigation.navigate("UserProfile");
       }
    };
-
-   const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
 
    return (
       !isLoggedIn && (

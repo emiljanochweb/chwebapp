@@ -13,6 +13,7 @@ import COLORS from "../helpers/colors";
 import { logout } from "../reducers/login";
 import SubMenu from "./SubMenu";
 import { useRoute } from "@react-navigation/native";
+import { capitalizeUsername } from "../helpers/utils";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -22,10 +23,6 @@ const UserProfile = () => {
    const username = useSelector((state) => state.login.user);
 
    const [quotes, setQuotes] = useState([]);
-
-   const capitalizeUsername = (str) => {
-      return str[0].toUpperCase() + str.slice(1);
-   };
 
    const getNewQuote = async () => {
       const response = await fetch("https://type.fit/api/quotes");
@@ -55,26 +52,40 @@ const UserProfile = () => {
                   <Text style={styles.innerText}>
                      {username ? capitalizeUsername(username) : "Guest"}
                   </Text>
-                  {isLoggedIn && (
+                  {isLoggedIn ? (
                      <TouchableOpacity
                         onPress={() => {
                            dispatch(logout());
                            navigation.navigate("Home");
                         }}
                      >
-                        <View style={styles.link}>
+                        <View style={styles.linkLogout}>
                            <Icon style={styles.iconStyle} name="logout" />
                            <Text style={styles.linkText}>Logout</Text>
                         </View>
                      </TouchableOpacity>
+                  ) : (
+                     <TouchableOpacity
+                        onPress={() => {
+                           navigation.navigate("LoginForm");
+                        }}
+                     >
+                        <View style={styles.linkLogin}>
+                           <Icon style={styles.iconStyle} name="login" />
+                           <Text style={styles.linkText}>Login</Text>
+                        </View>
+                     </TouchableOpacity>
                   )}
                </View>
-               <View style={styles.general}>
-                  <Text style={styles.dateNow}>{dateNow}</Text>
-                  <Text style={styles.quoteText}>
-                     "{text}" <Text style={styles.quoteAuthor}>{author}</Text>
-                  </Text>
-               </View>
+               {isLoggedIn && (
+                  <View style={styles.general}>
+                     <Text style={styles.dateNow}>{dateNow}</Text>
+                     <Text style={styles.quoteText}>
+                        "{text}"{" "}
+                        <Text style={styles.quoteAuthor}>{author}</Text>
+                     </Text>
+                  </View>
+               )}
             </View>
          </ScrollView>
          <SubMenu />
@@ -102,7 +113,7 @@ const styles = StyleSheet.create({
    dateNow: {
       textDecorationLine: "underline",
       fontSize: 18,
-      marginBottom: 5
+      marginBottom: 5,
    },
    quoteText: {
       color: COLORS.blue,
@@ -118,8 +129,17 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       fontSize: 30,
    },
-   link: {
+   linkLogout: {
       backgroundColor: COLORS.red,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      minWidth: 150,
+   },
+   linkLogin: {
+      backgroundColor: COLORS.green,
       paddingVertical: 10,
       paddingHorizontal: 15,
       flexDirection: "row",
