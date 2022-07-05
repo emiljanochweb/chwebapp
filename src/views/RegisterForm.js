@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
       backgroundColor: COLORS.white,
    },
    subContainer: {
-      flex: 1,
       paddingHorizontal: 20,
       paddingVertical: 25,
    },

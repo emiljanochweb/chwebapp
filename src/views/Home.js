@@ -63,12 +63,10 @@ export default Home;
 
 const styles = StyleSheet.create({
    container: {
-      justifyContent: "flex-start",
+      flex: 1,
       backgroundColor: "#fff",
-      height: "100%",
    },
    subContainer: {
-      flex: 1,
       paddingHorizontal: 20,
       paddingVertical: 25
    },

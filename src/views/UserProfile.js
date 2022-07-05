@@ -92,17 +92,17 @@ const styles = StyleSheet.create({
       paddingVertical: 25,
    },
    logoutContainer: {
-      flex: 1,
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "flex-start",
    },
    general: {
-      backgroundColor: COLORS.grey,
-      padding: 20,
+      paddingVertical: 20,
    },
    dateNow: {
       textDecorationLine: "underline",
+      fontSize: 18,
+      marginBottom: 5
    },
    quoteText: {
       color: COLORS.blue,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
       fontStyle: "italic",
    },
    quoteAuthor: {
-      color: COLORS.light,
+      color: COLORS.darkBlue,
       fontSize: 20,
       fontStyle: "normal",
    },
