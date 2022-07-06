@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       backgroundColor: COLORS.blue,
-      paddingHorizontal: 10,
+      paddingHorizontal: 10
    },
    profile: {
       justifyContent: "center",

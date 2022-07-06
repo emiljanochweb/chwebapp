@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { logout } from "../reducers/login";
-import SubMenu from "./SubMenu";   
+import SubMenu from "./SubMenu";
 import { capitalizeUsername } from "../helpers/utils";
 
 const UserProfile = () => {
@@ -80,11 +80,22 @@ const UserProfile = () => {
                </View>
                {isLoggedIn && (
                   <View style={styles.general}>
-                     <Text style={styles.dateNow}>{dateNow}</Text>
-                     <Text style={styles.quoteText}>
-                        "{text}"{" "}
+                     <View style={styles.dateNow}>
+                        <Icon style={styles.dateIcon} name="calendar-month" />
+                        <Text
+                           style={{
+                              fontSize: 25,
+                           }}
+                        >
+                           {dateNow}
+                        </Text>
+                     </View>
+                     <View>
+                        <Text style={styles.quoteText}>
+                           {text}
+                        </Text>
                         <Text style={styles.quoteAuthor}>{author}</Text>
-                     </Text>
+                     </View>
                   </View>
                )}
             </View>
@@ -112,19 +123,23 @@ const styles = StyleSheet.create({
       paddingVertical: 20,
    },
    dateNow: {
-      textDecorationLine: "underline",
-      fontSize: 18,
-      marginBottom: 5,
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 5
+   },
+   dateIcon: {
+      fontSize: 35,
    },
    quoteText: {
       color: COLORS.blue,
       fontSize: 22,
-      fontStyle: "italic",
+      fontStyle: "italic"
    },
    quoteAuthor: {
-      color: COLORS.darkBlue,
+      color: COLORS.black,
       fontSize: 20,
       fontStyle: "normal",
+      textDecorationLine: "underline"
    },
    innerText: {
       fontWeight: "bold",
