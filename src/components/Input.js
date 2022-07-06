@@ -16,6 +16,8 @@ const Input = ({
   const [hidePassword, setHidePassword] = useState(password);
   const [isFocused, setIsFocused] = useState(false);
 
+  const {isError, errorMessage} = error;
+
   return (
     <View style={{marginBottom: 20}}>
       <Text style={[style.label]}>{label}</Text>
@@ -23,18 +25,18 @@ const Input = ({
         style={[
           style.inputContainer,
           {
-            borderColor: error.isError
+            borderColor: isError
               ? COLORS.red
               : isFocused
               ? COLORS.darkBlue
               : COLORS.light,
             alignItems: 'center',
-            backgroundColor: error.isError ? COLORS.lightRed : COLORS.light
+            backgroundColor: isError ? COLORS.lightRed : COLORS.light
           },
         ]}>
         <Icon
           name={iconName}
-          style={{color: error.isError ? COLORS.red : COLORS.darkBlue, fontSize: 22, marginRight: 10}}
+          style={{color: isError ? COLORS.red : COLORS.darkBlue, fontSize: 22, marginRight: 10}}
         />
         <TextInput
           autoCorrect={false}
@@ -57,13 +59,13 @@ const Input = ({
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: error.isError ? COLORS.red : COLORS.darkBlue, fontSize: 22}}
+            style={{color: isError ? COLORS.red : COLORS.darkBlue, fontSize: 22}}
           />
         )}
       </View>
-      {error.errorMessage && (
+      {errorMessage && (
         <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}>
-          {error.errorMessage}
+          {errorMessage}
         </Text>
       )}
     </View>
