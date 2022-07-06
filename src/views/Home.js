@@ -6,17 +6,12 @@ import {
    TouchableOpacity,
    View,
 } from "react-native";
-import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native';
 import LogoContainer from "./LogoContainer";
 import COLORS from "../helpers/colors";
 import SubMenu from "./SubMenu";
 
 const Home = () => {
-   const isLoggedIn = useSelector((state) => state.login.isLogged);
-
-   const navigation = useNavigation();
    const {name} = useRoute();
 
    return (

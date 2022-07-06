@@ -18,7 +18,8 @@ import LogoContainer from "./LogoContainer";
 import { login } from "../reducers/login";
 import { useRoute } from "@react-navigation/native";
 import SubMenu from "./SubMenu";
-import { keyboardVerticalOffset } from "../helpers/utils";
+import { keyboardBehaviour } from "../helpers/utils";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
@@ -30,11 +31,12 @@ const LoginForm = () => {
    const dispatch = useDispatch();
    const navigation = useNavigation();
    const { name } = useRoute();
+   const headerHeight = useHeaderHeight();
 
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const [items, setItems] = useState([]);
- 
+
    useEffect(() => {
       base("Users")
          .select({ view: "Grid view" })
@@ -77,8 +79,8 @@ const LoginForm = () => {
          <>
             <KeyboardAvoidingView
                style={styles.container}
-               behavior="padding"
-               keyboardVerticalOffset={keyboardVerticalOffset}
+               behavior={keyboardBehaviour}
+               keyboardVerticalOffset={headerHeight}
             >
                <ScrollView>
                   <LogoContainer name={name} />

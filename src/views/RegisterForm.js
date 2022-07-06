@@ -6,12 +6,11 @@ import {
    ScrollView,
    Alert,
    Keyboard,
-   KeyboardAvoidingView
+   KeyboardAvoidingView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Airtable from "airtable";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -20,7 +19,8 @@ import LogoContainer from "./LogoContainer";
 import { login } from "../reducers/login";
 import { useRoute } from "@react-navigation/native";
 import SubMenu from "./SubMenu";
-import { keyboardVerticalOffset } from "../helpers/utils";
+import { keyboardBehaviour } from "../helpers/utils";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
@@ -32,6 +32,9 @@ const RegisterForm = () => {
    const dispatch = useDispatch();
    const navigation = useNavigation();
    const { name } = useRoute();
+   const headerHeight = useHeaderHeight();
+
+   console.warn(headerHeight, "haha");
 
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
@@ -59,13 +62,11 @@ const RegisterForm = () => {
       const lowercaseRegExp = /(?=.*?[a-z])/;
       const digitsRegExp = /(?=.*?[0-9])/;
       const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
-      // const minLengthRegExp = /.{8,}/;
 
       const uppercasePassword = uppercaseRegExp.test(trimmedPassword);
       const lowercasePassword = lowercaseRegExp.test(trimmedPassword);
       const digitsPassword = digitsRegExp.test(trimmedPassword);
       const specialCharPassword = specialCharRegExp.test(trimmedPassword);
-      // const minLengthPassword = minLengthRegExp.test(trimmedPassword);
 
       const usernameFound = items.find(
          (item) =>
@@ -124,8 +125,8 @@ const RegisterForm = () => {
          <>
             <KeyboardAvoidingView
                style={styles.container}
-               behavior="padding"
-               keyboardVerticalOffset={keyboardVerticalOffset}
+               behavior={keyboardBehaviour}
+               keyboardVerticalOffset={headerHeight}
             >
                <ScrollView>
                   <LogoContainer name={name} />
