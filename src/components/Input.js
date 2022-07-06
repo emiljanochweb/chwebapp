@@ -16,27 +16,24 @@ const Input = ({
   const [hidePassword, setHidePassword] = useState(password);
   const [isFocused, setIsFocused] = useState(false);
 
-  const {isError, errorMessage} = error;
-
   return (
     <View style={{marginBottom: 20}}>
-      <Text style={[style.label]}>{label}</Text>
+      <Text style={style.label}>{label}</Text>
       <View
         style={[
           style.inputContainer,
           {
-            borderColor: isError
+            borderColor: error
               ? COLORS.red
               : isFocused
               ? COLORS.darkBlue
               : COLORS.light,
-            alignItems: 'center',
-            backgroundColor: isError ? COLORS.lightRed : COLORS.light
+            alignItems: 'center'
           },
         ]}>
         <Icon
           name={iconName}
-          style={{color: isError ? COLORS.red : COLORS.darkBlue, fontSize: 22, marginRight: 10}}
+          style={{color: COLORS.darkBlue, fontSize: 22, marginRight: 10}}
         />
         <TextInput
           autoCorrect={false}
@@ -48,10 +45,7 @@ const Input = ({
           secureTextEntry={hidePassword}
           onChangeText={onChangeText}
           value={value}
-          style={{
-            color: COLORS.darkBlue, 
-            flex: 1
-          }}
+          style={{ color: COLORS.darkBlue, flex: 1 }}
           placeholder={label}
           {...props}
         />
@@ -59,13 +53,13 @@ const Input = ({
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
             name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: isError ? COLORS.red : COLORS.darkBlue, fontSize: 22}}
+            style={{color: COLORS.darkBlue, fontSize: 22}}
           />
         )}
       </View>
-      {errorMessage && (
+      {error && (
         <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}>
-          {errorMessage}
+          {error}
         </Text>
       )}
     </View>

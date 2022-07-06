@@ -34,15 +34,7 @@ const LoginForm = () => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const [items, setItems] = useState([]);
-   const [errorUsername, setErrorUsername] = useState({
-      isError: false,
-      errorMessage: null,
-   });
-   const [errorPassword, setErrorPassword] = useState({
-      isError: false,
-      errorMessage: null,
-   });
-
+ 
    useEffect(() => {
       base("Users")
          .select({ view: "Grid view" })
@@ -57,27 +49,7 @@ const LoginForm = () => {
       let trimmedPassword = password.trim();
 
       if (trimmedUsername.length === 0 || trimmedPassword.length === 0) {
-         if (trimmedUsername.length === 0) {
-            setErrorUsername({
-               isError: true,
-               errorMessage: "Username should not be empty!",
-            });
-         } else
-            setErrorUsername({
-               isError: false,
-               errorMessage: null,
-            });
-
-         if (trimmedPassword.length === 0) {
-            setErrorPassword({
-               isError: true,
-               errorMessage: "Password should not be empty!",
-            });
-         } else
-            setErrorPassword({
-               isError: false,
-               errorMessage: null,
-            });
+         Alert.alert("Username and password should not be empty!");
          return;
       }
 
@@ -116,7 +88,6 @@ const LoginForm = () => {
                         iconName="email-outline"
                         onChangeText={setUsername}
                         value={username}
-                        error={errorUsername}
                      />
                      <Input
                         label="Password"
@@ -124,7 +95,6 @@ const LoginForm = () => {
                         iconName="lock-outline"
                         onChangeText={setPassword}
                         value={password}
-                        error={errorPassword}
                      />
                      <Button title="LOGIN" onPress={submitHandler} />
                      <TouchableOpacity

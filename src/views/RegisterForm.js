@@ -37,19 +37,6 @@ const RegisterForm = () => {
    const [password, setPassword] = useState("");
    const [confirmPassword, setConfirmPassword] = useState("");
    const [items, setItems] = useState([]);
-   const [errorUsername, setErrorUsername] = useState({
-      isError: false,
-      errorMessage: null,
-   });
-   const [errorPassword, setErrorPassword] = useState({
-      isError: false,
-      errorMessage: null,
-   });
-   const [errorConfirmPassword, setErrorConfirmPassword] = useState({
-      isError: false,
-      errorMessage: null,
-   });
-
 
    useEffect(() => {
       base("Users")
@@ -90,85 +77,31 @@ const RegisterForm = () => {
          trimmedPassword.length === 0 ||
          trimmedConfirmPassword.length === 0
       ) {
-         if(trimmedUsername.length === 0){
-            setErrorUsername({
-               isError: true,
-               errorMessage: "Username should not be empty"
-            })
-         }
-         if(trimmedPassword.length === 0){
-            setErrorPassword({
-               isError: true,
-               errorMessage: "Password should not be empty"
-            })
-         }
-         if(trimmedConfirmPassword.length === 0){
-            setErrorConfirmPassword({
-               isError: true,
-               errorMessage: "Confirm password should not be empty"
-            })
-         }
-         // Alert.alert("Fields should not be empty!");
+         Alert.alert("Fields should not be empty!");
          isValid = false;
       } else if (trimmedUsername.length < 3) {
-         // Alert.alert("Username is too short!");
-         setErrorUsername({
-            isError: true,
-            errorMessage: "Username is too short!"
-         })
+         Alert.alert("Username is too short!");
          isValid = false;
       } else if (usernameFound !== undefined) {
-         // Alert.alert("This user is already registered!");
-         setErrorUsername({
-            isError: true,
-            errorMessage: "This user is already registered!"
-         })
+         Alert.alert("This user is already registered!");
          isValid = false;
       } else if (trimmedPassword.length < 12) {
-         // Alert.alert("Password is too short!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Password is too short!"
-         })
+         Alert.alert("Password is too short!");
          isValid = false;
       } else if (!uppercasePassword) {
-         // Alert.alert("Password should have at least one uppercase!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Password should have at least one uppercase!"
-         })
+         Alert.alert("Password should have at least one uppercase!");
          isValid = false;
       } else if (!lowercasePassword) {
-         // Alert.alert("Password should have at least one lowercase!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Password should have at least one lowercase!"
-         })
+         Alert.alert("Password should have at least one lowercase!");
          isValid = false;
       } else if (!digitsPassword) {
-         // Alert.alert("Password should have at least one digit!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Password should have at least one digit!"
-         })
+         Alert.alert("Password should have at least one digit!");
          isValid = false;
       } else if (!specialCharPassword) {
-         // Alert.alert("Password should have at least one special character!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Password should have at least one special character!"
-         })
+         Alert.alert("Password should have at least one special character!");
          isValid = false;
       } else if (trimmedPassword !== trimmedConfirmPassword) {
-         // Alert.alert("Password don't match!");
-         setErrorPassword({
-            isError: true,
-            errorMessage: "Passwords don't match!"
-         });
-         setErrorConfirmPassword({
-            isError: true,
-            errorMessage: "Passwords don't match!"
-         })
+         Alert.alert("Password don't match!");
          isValid = false;
       }
 
@@ -202,7 +135,6 @@ const RegisterForm = () => {
                         iconName="email-outline"
                         onChangeText={setUsername}
                         value={username}
-                        error={errorUsername}
                      />
                      <Input
                         label="Password"
@@ -210,7 +142,6 @@ const RegisterForm = () => {
                         iconName="lock-outline"
                         onChangeText={setPassword}
                         value={password}
-                        error={errorPassword}
                      />
                      <Input
                         label="Confirm Password"
@@ -218,7 +149,6 @@ const RegisterForm = () => {
                         iconName="lock-outline"
                         onChangeText={setConfirmPassword}
                         value={confirmPassword}
-                        error={errorConfirmPassword}
                      />
                      <Button title="REGISTER" onPress={submitHandler} />
                      <TouchableOpacity

@@ -22,13 +22,13 @@ export default function App() {
       return {
          title: name,
          headerStyle: {
-            backgroundColor: COLORS.blue,
+            backgroundColor: COLORS.blue
          },
          headerTintColor: "#fff",
          headerTitleStyle: {
             fontWeight: "bold",
          },
-         
+         headerTitleAlign: 'center'
       };
    };
 
