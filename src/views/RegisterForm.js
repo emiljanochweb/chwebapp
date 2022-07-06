@@ -6,8 +6,7 @@ import {
    ScrollView,
    Alert,
    Keyboard,
-   KeyboardAvoidingView,
-   Platform,
+   KeyboardAvoidingView
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,13 +59,13 @@ const RegisterForm = () => {
       const lowercaseRegExp = /(?=.*?[a-z])/;
       const digitsRegExp = /(?=.*?[0-9])/;
       const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
-      const minLengthRegExp = /.{8,}/;
+      // const minLengthRegExp = /.{8,}/;
 
       const uppercasePassword = uppercaseRegExp.test(trimmedPassword);
       const lowercasePassword = lowercaseRegExp.test(trimmedPassword);
       const digitsPassword = digitsRegExp.test(trimmedPassword);
       const specialCharPassword = specialCharRegExp.test(trimmedPassword);
-      const minLengthPassword = minLengthRegExp.test(trimmedPassword);
+      // const minLengthPassword = minLengthRegExp.test(trimmedPassword);
 
       const usernameFound = items.find(
          (item) =>

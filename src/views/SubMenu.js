@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../helpers/colors";
@@ -24,7 +24,7 @@ const SubMenu = () => {
                   <View style={styles.profile}>
                      <Icon
                         style={styles.profileIcon}
-                        name="application-edit-outline"
+                        name="account-plus"
                      />
                   </View>
                </TouchableOpacity>

@@ -9,7 +9,6 @@ import {
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import LogoContainer from "./LogoContainer";
 import COLORS from "../helpers/colors";
 import SubMenu from "./SubMenu";
@@ -36,22 +35,6 @@ const Home = () => {
                   di complessità. Sono problem solver flessibili e attenti al
                   dettaglio.
                </Text>
-               {!isLoggedIn && (
-                  <>
-                     <TouchableOpacity
-                        style={styles.touch}
-                        onPress={() => navigation.navigate("LoginForm")}
-                     >
-                        <Text style={styles.link}>Login</Text>
-                     </TouchableOpacity>
-                     <TouchableOpacity
-                        style={styles.touch}
-                        onPress={() => navigation.navigate("RegisterForm")}
-                     >
-                        <Text style={styles.link}>Register</Text>
-                     </TouchableOpacity>
-                  </>
-               )}
             </View>
          </ScrollView>
          <SubMenu />

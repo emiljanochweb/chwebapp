@@ -4,6 +4,8 @@ import {
    StyleSheet,
    ScrollView,
    TouchableOpacity,
+   Modal,
+   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,8 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { logout } from "../reducers/login";
-import SubMenu from "./SubMenu";
-import { useRoute } from "@react-navigation/native";
+import SubMenu from "./SubMenu";   
 import { capitalizeUsername } from "../helpers/utils";
 
 const UserProfile = () => {

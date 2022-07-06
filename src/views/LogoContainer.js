@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import COLORS from "../helpers/colors";
 
 const LogoContainer = ({name}) => {
-   let path = (name === "RegisterForm") ? require('../../assets/registration.jpg') : ((name === "LoginForm") ? require('../../assets/login.jpg') : require('../../assets/logo.png'))
+   let path = (name === "RegisterForm") ? require('../../assets/registration.jpg') : ((name === "LoginForm") ? require('../../assets/login.jpg') : require('../../assets/logoimage.png'))
 
    return (
       <View style={styles.center}>

@@ -5,14 +5,12 @@ import {
    TouchableOpacity,
    View,
    Alert,
-   KeyboardAvoidingView,
-   Platform,
+   KeyboardAvoidingView
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Airtable from "airtable";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import COLORS from "../helpers/colors";
