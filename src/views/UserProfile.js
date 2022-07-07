@@ -4,8 +4,6 @@ import {
    StyleSheet,
    ScrollView,
    TouchableOpacity,
-   Modal,
-   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +13,7 @@ import COLORS from "../helpers/colors";
 import { logout } from "../reducers/login";
 import SubMenu from "./SubMenu";
 import { capitalizeUsername } from "../helpers/utils";
+import Loader from "../components/Loader";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -24,6 +23,7 @@ const UserProfile = () => {
    const username = useSelector((state) => state.login.user);
 
    const [quotes, setQuotes] = useState([]);
+   const [showLoader, setShowLoader] = useState(false);
 
    const getNewQuote = async () => {
       const response = await fetch("https://type.fit/api/quotes");
@@ -46,7 +46,8 @@ const UserProfile = () => {
    const { text, author } = quotes.length > 0 && quotes[indx];
 
    return (
-      <>
+      <> 
+         <Loader visible={quotes.length === 0 ? true : false} />
          <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.subContainer}>
                <View style={styles.logoutContainer}>
@@ -147,7 +148,8 @@ const styles = StyleSheet.create({
    },
    innerText: {
       fontWeight: "bold",
-      fontSize: 30
+      fontSize: 30,
+      width: '50%'
    },
    linkButton: {
       paddingVertical: 10,
@@ -156,6 +158,7 @@ const styles = StyleSheet.create({
       justifyContent: "space-evenly",
       alignItems: "center",
       minWidth: 150,
+      width: '50%'
    },
    linkText: {
       color: COLORS.white,
