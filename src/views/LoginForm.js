@@ -127,9 +127,7 @@ const LoginForm = () => {
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <SafeAreaView>
-          <SubMenu />
-        </SafeAreaView>
+        <SubMenu />
       </>
     )
   );

@@ -10,26 +10,26 @@ const SubMenu = () => {
 
   return (
     <View style={styles.submenu}>
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity onPress={() => navigation.push("Home")}>
         <View style={styles.profile}>
           <Icon style={styles.profileIcon} name="home" />
         </View>
       </TouchableOpacity>
       {!isLoggedIn && (
         <>
-          <TouchableOpacity onPress={() => navigation.navigate("RegisterForm")}>
+          <TouchableOpacity onPress={() => navigation.push("RegisterForm")}>
             <View style={styles.profile}>
               <Icon style={styles.profileIcon} name="account-plus" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("LoginForm")}>
+          <TouchableOpacity onPress={() => navigation.push("LoginForm")}>
             <View style={styles.profile}>
               <Icon style={styles.profileIcon} name="login" />
             </View>
           </TouchableOpacity>
         </>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
+      <TouchableOpacity onPress={() => navigation.push("UserProfile")}>
         <View style={styles.profile}>
           <Icon style={styles.profileIcon} name="account" />
         </View>
