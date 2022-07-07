@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../helpers/colors';
+import { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import COLORS from "../helpers/colors";
 
 const Input = ({
   label,
@@ -17,7 +17,7 @@ const Input = ({
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{ marginBottom: 20 }}>
       <Text style={style.label}>{label}</Text>
       <View
         style={[
@@ -28,12 +28,13 @@ const Input = ({
               : isFocused
               ? COLORS.darkBlue
               : COLORS.light,
-            alignItems: 'center'
+            alignItems: "center",
           },
-        ]}>
+        ]}
+      >
         <Icon
           name={iconName}
-          style={{color: COLORS.darkBlue, fontSize: 22, marginRight: 10}}
+          style={{ color: COLORS.darkBlue, fontSize: 22, marginRight: 10 }}
         />
         <TextInput
           autoCorrect={false}
@@ -52,13 +53,13 @@ const Input = ({
         {password && (
           <Icon
             onPress={() => setHidePassword(!hidePassword)}
-            name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            style={{color: COLORS.darkBlue, fontSize: 22}}
+            name={hidePassword ? "eye-outline" : "eye-off-outline"}
+            style={{ color: COLORS.darkBlue, fontSize: 22 }}
           />
         )}
       </View>
       {error && (
-        <Text style={{marginTop: 7, color: COLORS.red, fontSize: 12}}>
+        <Text style={{ marginTop: 7, color: COLORS.red, fontSize: 12 }}>
           {error}
         </Text>
       )}
@@ -75,7 +76,7 @@ const style = StyleSheet.create({
   inputContainer: {
     height: 55,
     backgroundColor: COLORS.light,
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 15,
     borderWidth: 0.5,
   },
