@@ -12,7 +12,6 @@ import { useRoute } from "@react-navigation/native";
 import LogoContainer from "./LogoContainer";
 import COLORS from "../helpers/colors";
 import SubMenu from "./SubMenu";
-import { DATA } from "../helpers/constants";
 
 const Home = () => {
    const { name } = useRoute();

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import COLORS from "../helpers/colors";
+import { digitsRegExp, lowercaseRegExp, specialCharRegExp, uppercaseRegExp } from "../helpers/constants";
 import { keyboardBehaviour } from "../helpers/utils";
 import { login } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
@@ -55,11 +56,6 @@ const RegisterForm = () => {
       let trimmedUsername = username.trim();
       let trimmedPassword = password.trim();
       let trimmedConfirmPassword = confirmPassword.trim();
-
-      const uppercaseRegExp = /(?=.*?[A-Z])/;
-      const lowercaseRegExp = /(?=.*?[a-z])/;
-      const digitsRegExp = /(?=.*?[0-9])/;
-      const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
 
       const uppercasePassword = uppercaseRegExp.test(trimmedPassword);
       const lowercasePassword = lowercaseRegExp.test(trimmedPassword);

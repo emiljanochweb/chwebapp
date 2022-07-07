@@ -24,3 +24,8 @@ export const DATA = [
       desc: "Soluzioni intelligenti per far crescere la tua Azienda .Inizia oggi un progetto con noi, applicazione mobile ,pubblicità Google,Facebook,pubblicità Social, Web applications e Lead Generation",
    },
 ];
+
+export const uppercaseRegExp = /(?=.*?[A-Z])/;
+export const lowercaseRegExp = /(?=.*?[a-z])/;
+export const digitsRegExp = /(?=.*?[0-9])/;
+export const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
