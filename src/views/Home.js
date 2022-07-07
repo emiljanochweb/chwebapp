@@ -1,18 +1,21 @@
 import React from "react";
 import {
+   FlatList,
+   Image,
+   SafeAreaView,
    ScrollView,
    StyleSheet,
    Text,
-   TouchableOpacity,
    View,
 } from "react-native";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 import LogoContainer from "./LogoContainer";
 import COLORS from "../helpers/colors";
 import SubMenu from "./SubMenu";
+import { DATA } from "../helpers/constants";
 
 const Home = () => {
-   const {name} = useRoute();
+   const { name } = useRoute();
 
    return (
       <>
@@ -41,16 +44,12 @@ export default Home;
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
+      flexGrow: 1,
       backgroundColor: "#fff",
    },
    subContainer: {
       paddingHorizontal: 20,
-      paddingVertical: 25
-   },
-   profileIcon: {
-      color: COLORS.white,
-      fontSize: 30,
+      paddingVertical: 25,
    },
    description: {
       color: COLORS.darkBlue,
@@ -59,15 +58,5 @@ const styles = StyleSheet.create({
       padding: 10,
       fontSize: 16,
       textAlign: "justify",
-   },
-   touch: {
-      alignItems: "center",
-   },
-   link: {
-      color: COLORS.darkBlue,
-      textDecorationLine: "underline",
-      textTransform: "uppercase",
-      fontSize: 15,
-      padding: 10,
    },
 });

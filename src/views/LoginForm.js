@@ -6,6 +6,7 @@ import {
    View,
    Alert,
    KeyboardAvoidingView,
+   SafeAreaView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,7 +109,9 @@ const LoginForm = () => {
                   </View>
                </ScrollView>
             </KeyboardAvoidingView>
-            <SubMenu />
+            <SafeAreaView>
+               <SubMenu />
+            </SafeAreaView>
          </>
       )
    );
