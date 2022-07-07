@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,

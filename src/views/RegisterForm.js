@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -194,9 +193,7 @@ const RegisterForm = () => {
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <SafeAreaView>
-          <SubMenu />
-        </SafeAreaView>
+        <SubMenu />
       </>
     )
   );
