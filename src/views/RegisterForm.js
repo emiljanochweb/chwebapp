@@ -39,6 +39,7 @@ const RegisterForm = () => {
    const [password, setPassword] = useState("");
    const [confirmPassword, setConfirmPassword] = useState("");
    const [items, setItems] = useState([]);
+   const [errors, setErrors] = useState({});
 
    useEffect(() => {
       base("Users")
@@ -71,32 +72,56 @@ const RegisterForm = () => {
          trimmedUsername.length === 0 ||
          trimmedPassword.length === 0 ||
          trimmedConfirmPassword.length === 0
-      ) {
-         Alert.alert("Fields should not be empty!");
+      ) {         
+         if(trimmedUsername.length > 0){
+            handleError(null, 'username');
+         } else handleError('This field should not be empty!', 'username');
+
+         if(trimmedPassword.length > 0){
+            handleError(null, 'password');
+         } else handleError('This field should not be empty!', 'password');
+
+         if(trimmedConfirmPassword.length > 0){
+            handleError(null, 'confirmPassword');
+         } else handleError('This field should not be empty!', 'confirmPassword');
+         
          isValid = false;
-      } else if (trimmedUsername.length < 3) {
-         Alert.alert("Username is too short!");
+      } 
+      
+      if (
+         trimmedUsername.length > 0 &&
+         trimmedPassword.length > 0 &&
+         trimmedConfirmPassword.length > 0
+      ) { 
+         handleError(null, 'username');
+         handleError(null, 'password');
+         handleError(null, 'confirmPassword');
+      }
+      
+      if (trimmedUsername.length < 3) {
+         handleError("Username is too short!", 'username');
          isValid = false;
-      } else if (usernameFound !== undefined) {
-         Alert.alert("This user is already registered!");
+      }       
+      else if (usernameFound !== undefined) {
+         handleError("This user is already registered!", 'username');
          isValid = false;
       } else if (trimmedPassword.length < 12) {
-         Alert.alert("Password is too short!");
+         handleError("Password is too short!", 'password');
          isValid = false;
       } else if (!uppercasePassword) {
-         Alert.alert("Password should have at least one uppercase!");
+         handleError("Password should have at least one uppercase!", 'password');
          isValid = false;
       } else if (!lowercasePassword) {
-         Alert.alert("Password should have at least one lowercase!");
+         handleError("Password should have at least one lowercase!", 'password');
          isValid = false;
       } else if (!digitsPassword) {
-         Alert.alert("Password should have at least one digit!");
+         handleError("Password should have at least one digit!", 'password');
          isValid = false;
       } else if (!specialCharPassword) {
-         Alert.alert("Password should have at least one special character!");
+         handleError("Password should have at least one special character!", 'password');
          isValid = false;
       } else if (trimmedPassword !== trimmedConfirmPassword) {
-         Alert.alert("Password don't match!");
+         handleError("Passwords don't match!", 'confirmPassword');
          isValid = false;
       }
 
@@ -114,6 +139,12 @@ const RegisterForm = () => {
       }
    };
 
+   const handleError = (error, input) => {
+      if(error !== null){
+         setErrors(prevState => ({...prevState, [input]: error}));
+      } else setErrors({});
+    };
+
    return (
       !isLoggedIn && (
          <>
@@ -130,6 +161,7 @@ const RegisterForm = () => {
                         iconName="email-outline"
                         onChangeText={setUsername}
                         value={username}
+                        error={errors.username}
                      />
                      <Input
                         label="Password"
@@ -137,6 +169,7 @@ const RegisterForm = () => {
                         iconName="lock-outline"
                         onChangeText={setPassword}
                         value={password}
+                        error={errors.password}
                      />
                      <Input
                         label="Confirm Password"
@@ -144,6 +177,7 @@ const RegisterForm = () => {
                         iconName="lock-outline"
                         onChangeText={setConfirmPassword}
                         value={confirmPassword}
+                        error={errors.confirmPassword}
                      />
                      <Button title="REGISTER" onPress={submitHandler} />
                      <TouchableOpacity

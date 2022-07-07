@@ -37,6 +37,7 @@ const LoginForm = () => {
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
    const [items, setItems] = useState([]);
+   const [errors, setErrors] = useState({});
 
    useEffect(() => {
       base("Users")
@@ -52,8 +53,20 @@ const LoginForm = () => {
       let trimmedPassword = password.trim();
 
       if (trimmedUsername.length === 0 || trimmedPassword.length === 0) {
-         Alert.alert("Username and password should not be empty!");
+         if(trimmedUsername.length === 0){
+            handleError('Please input username', 'username');
+         } else handleError(null, 'username');
+
+         if(trimmedPassword.length === 0){
+            handleError('Please input password', 'password');
+         } else handleError(null, 'password');
+
          return;
+      }
+
+      if(trimmedUsername.length > 0 && trimmedPassword.length > 0){
+         handleError(null, 'username');
+         handleError(null, 'password');
       }
 
       const usernameFound = items.find(
@@ -75,6 +88,12 @@ const LoginForm = () => {
       }
    };
 
+   const handleError = (error, input) => {
+      if(error !== null){
+         setErrors(prevState => ({...prevState, [input]: error}));
+      } else setErrors({});
+    };
+
    return (
       !isLoggedIn && (
          <>
@@ -91,6 +110,7 @@ const LoginForm = () => {
                         iconName="email-outline"
                         onChangeText={setUsername}
                         value={username}
+                        error={errors.username}
                      />
                      <Input
                         label="Password"
@@ -98,6 +118,7 @@ const LoginForm = () => {
                         iconName="lock-outline"
                         onChangeText={setPassword}
                         value={password}
+                        error={errors.password}
                      />
                      <Button title="LOGIN" onPress={submitHandler} />
                      <TouchableOpacity

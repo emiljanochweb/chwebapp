@@ -60,7 +60,9 @@ const UserProfile = () => {
                            navigation.navigate("Home");
                         }}
                      >
-                        <View style={styles.linkLogout}>
+                        <View style={[styles.linkButton, {
+                           backgroundColor: COLORS.red
+                        }]}>
                            <Icon style={styles.iconStyle} name="logout" />
                            <Text style={styles.linkText}>Logout</Text>
                         </View>
@@ -71,7 +73,9 @@ const UserProfile = () => {
                            navigation.navigate("LoginForm");
                         }}
                      >
-                        <View style={styles.linkLogin}>
+                        <View style={[styles.linkButton,{
+                           backgroundColor: COLORS.green
+                        }]}>
                            <Icon style={styles.iconStyle} name="login" />
                            <Text style={styles.linkText}>Login</Text>
                         </View>
@@ -143,19 +147,9 @@ const styles = StyleSheet.create({
    },
    innerText: {
       fontWeight: "bold",
-      fontSize: 30,
+      fontSize: 30
    },
-   linkLogout: {
-      backgroundColor: COLORS.red,
-      paddingVertical: 10,
-      paddingHorizontal: 15,
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      minWidth: 150,
-   },
-   linkLogin: {
-      backgroundColor: COLORS.green,
+   linkButton: {
       paddingVertical: 10,
       paddingHorizontal: 15,
       flexDirection: "row",
