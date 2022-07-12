@@ -1,11 +1,23 @@
 import { useRoute } from "@react-navigation/native";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import Item from "../components/Item";
 import COLORS from "../helpers/colors";
+import { DATA } from "../helpers/constants";
 import LogoContainer from "./LogoContainer";
 import SubMenu from "./SubMenu";
+import { LogBox } from 'react-native';
+import { useEffect } from "react";
 
 const Home = () => {
   const { name } = useRoute();
+
+  const renderItem = ({ item }) => (
+    <Item title={item.title} desc={item.desc} />
+  );
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, [])
 
   return (
     <>
@@ -22,6 +34,12 @@ const Home = () => {
             soluzioni con diversi gradi di complessità. Sono problem solver
             flessibili e attenti al dettaglio.
           </Text>
+        <FlatList
+          nestedScrollEnabled={true}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          />
         </View>
       </ScrollView>
       <SubMenu />
@@ -47,5 +65,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     textAlign: "justify",
+    lineHeight: 25
   },
 });
