@@ -14,8 +14,6 @@ const Tab = createBottomTabNavigator();
 const Navigator = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
 
-   console.warn(isLoggedIn, "test");
-
    return (
       <Tab.Navigator
          initialRouteName="Home"

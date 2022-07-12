@@ -90,43 +90,39 @@ const LoginForm = () => {
   };
 
   return (
-    !isLoggedIn && (
-      <>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={keyboardBehaviour}
-          keyboardVerticalOffset={headerHeight}
-        >
-          <ScrollView>
-            <LogoContainer name={name} />
-            <View style={styles.subContainer}>
-              <Input
-                label="Username"
-                iconName="email-outline"
-                onChangeText={setUsername}
-                value={username}
-                error={errors.username}
-              />
-              <Input
-                label="Password"
-                password
-                iconName="lock-outline"
-                onChangeText={setPassword}
-                value={password}
-                error={errors.password}
-              />
-              <Button title="LOGIN" onPress={submitHandler} />
-              <TouchableOpacity
-                style={styles.touch}
-                onPress={() => navigation.navigate("RegisterForm")}
-              >
-                <Text style={styles.link}>Create a new account</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </>
-    )
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={keyboardBehaviour}
+      keyboardVerticalOffset={headerHeight}
+    >
+      <ScrollView>
+        <LogoContainer name={name} />
+        <View style={styles.subContainer}>
+          <Input
+            label="Username"
+            iconName="email-outline"
+            onChangeText={setUsername}
+            value={username}
+            error={errors.username}
+          />
+          <Input
+            label="Password"
+            password
+            iconName="lock-outline"
+            onChangeText={setPassword}
+            value={password}
+            error={errors.password}
+          />
+          <Button title="LOGIN" onPress={submitHandler} />
+          <TouchableOpacity
+            style={styles.touch}
+            onPress={() => navigation.navigate("RegisterForm")}
+          >
+            <Text style={styles.link}>Create a new account</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
