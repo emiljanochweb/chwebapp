@@ -35,6 +35,9 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  console.log(navigation, 'navi')
+
   const { name } = useRoute();
   const headerHeight = useHeaderHeight();
 
@@ -139,7 +142,7 @@ const RegisterForm = () => {
       setUsername("");
       setPassword("");
       setConfirmPassword("");
-      navigation.push("UserProfile");
+      navigation.navigate("UserProfile");
     }
   };
 
@@ -186,14 +189,14 @@ const RegisterForm = () => {
               <Button title="REGISTER" onPress={submitHandler} />
               <TouchableOpacity
                 style={styles.touch}
-                onPress={() => navigation.push("LoginForm")}
+                onPress={() => navigation.navigate("LoginForm")}
               >
                 <Text style={styles.link}>Already have an account? Login</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <SubMenu />
+        {/* <SubMenu /> */}
       </>
     )
   );

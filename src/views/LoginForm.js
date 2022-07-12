@@ -78,7 +78,7 @@ const LoginForm = () => {
       setUsername("");
       setPassword("");
       dispatch(login(trimmedUsername));
-      navigation.push("UserProfile");
+      navigation.navigate("UserProfile");
     } else {
       Alert.alert("Username or password is incorrent!");
     }
@@ -119,14 +119,14 @@ const LoginForm = () => {
               <Button title="LOGIN" onPress={submitHandler} />
               <TouchableOpacity
                 style={styles.touch}
-                onPress={() => navigation.push("RegisterForm")}
+                onPress={() => navigation.navigate("RegisterForm")}
               >
                 <Text style={styles.link}>Create a new account</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        <SubMenu />
+        {/* <SubMenu /> */}
       </>
     )
   );

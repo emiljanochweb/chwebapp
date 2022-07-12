@@ -42,7 +42,7 @@ const Home = () => {
           />
         </View>
       </ScrollView>
-      <SubMenu />
+      {/* <SubMenu /> */}
     </>
   );
 };

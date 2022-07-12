@@ -56,7 +56,7 @@ const UserProfile = () => {
                      <TouchableOpacity
                         onPress={() => {
                            dispatch(logout());
-                           navigation.push("Home");
+                           navigation.navigate("Home");
                         }}
                      >
                         <View
@@ -74,7 +74,7 @@ const UserProfile = () => {
                   ) : (
                      <TouchableOpacity
                         onPress={() => {
-                           navigation.push("LoginForm");
+                           navigation.navigate("LoginForm");
                         }}
                      >
                         <View
@@ -111,7 +111,7 @@ const UserProfile = () => {
                )}
             </View>
          </ScrollView>
-         <SubMenu />
+         {/* <SubMenu /> */}
       </>
    );
 };
