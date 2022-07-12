@@ -35,9 +35,6 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  console.log(navigation, 'navi')
-
   const { name } = useRoute();
   const headerHeight = useHeaderHeight();
 
