@@ -24,7 +24,6 @@ import {
 import { keyboardBehaviour } from "../helpers/utils";
 import { login } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
-import SubMenu from "./SubMenu";
 
 const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
   "appZpNOdNq1NeGspC"
@@ -193,7 +192,6 @@ const RegisterForm = () => {
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-        {/* <SubMenu /> */}
       </>
     )
   );

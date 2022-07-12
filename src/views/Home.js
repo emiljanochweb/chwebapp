@@ -4,7 +4,6 @@ import Item from "../components/Item";
 import COLORS from "../helpers/colors";
 import { DATA } from "../helpers/constants";
 import LogoContainer from "./LogoContainer";
-import SubMenu from "./SubMenu";
 import { LogBox } from 'react-native';
 import { useEffect } from "react";
 
@@ -42,7 +41,6 @@ const Home = () => {
           />
         </View>
       </ScrollView>
-      {/* <SubMenu /> */}
     </>
   );
 };

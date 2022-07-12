@@ -12,8 +12,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { capitalizeUsername } from "../helpers/utils";
 import { logout } from "../reducers/login";
-import SubMenu from "./SubMenu";
-import Loader from "../components/Loader";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -111,7 +109,6 @@ const UserProfile = () => {
                )}
             </View>
          </ScrollView>
-         {/* <SubMenu /> */}
       </>
    );
 };

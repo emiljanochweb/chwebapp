@@ -74,7 +74,6 @@ const Navigator = () => {
                />
             </>
          )}
-
          <Tab.Screen
             name="UserProfile"
             component={UserProfile}
