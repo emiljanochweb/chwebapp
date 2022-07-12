@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+   ScrollView,
+   StyleSheet,
+   Text,
+   TouchableOpacity,
+   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
@@ -16,38 +16,36 @@ import SubMenu from "./SubMenu";
 import Loader from "../components/Loader";
 
 const UserProfile = () => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+   const navigation = useNavigation();
+   const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector((state) => state.login.isLogged);
-  const username = useSelector((state) => state.login.user);
+   const isLoggedIn = useSelector((state) => state.login.isLogged);
+   const username = useSelector((state) => state.login.user);
 
    const [quotes, setQuotes] = useState([]);
-   const [showLoader, setShowLoader] = useState(false);
 
-  const getNewQuote = async () => {
-    const response = await fetch("https://type.fit/api/quotes");
-    const data = await response.json();
-    setQuotes(data);
-  };
+   const getNewQuote = async () => {
+      const response = await fetch("https://type.fit/api/quotes");
+      const data = await response.json();
+      setQuotes(data);
+   };
 
-  useEffect(() => {
-    getNewQuote();
-  }, []);
+   useEffect(() => {
+      getNewQuote();
+   }, []);
 
-  const dateNow = new Date().toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+   const dateNow = new Date().toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+   });
 
-  const indx = Math.floor(Math.random() * quotes.length);
+   const indx = Math.floor(Math.random() * quotes.length);
 
-  const { text, author } = quotes.length > 0 && quotes[indx];
+   const { text, author } = quotes.length > 0 && quotes[indx];
 
    return (
-      <> 
-         <Loader visible={quotes.length === 0 ? true : false} />
+      <>
          <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.subContainer}>
                <View style={styles.logoutContainer}>
@@ -61,9 +59,14 @@ const UserProfile = () => {
                            navigation.push("Home");
                         }}
                      >
-                        <View style={[styles.linkButton, {
-                           backgroundColor: COLORS.red
-                        }]}>
+                        <View
+                           style={[
+                              styles.linkButton,
+                              {
+                                 backgroundColor: COLORS.red,
+                              },
+                           ]}
+                        >
                            <Icon style={styles.iconStyle} name="logout" />
                            <Text style={styles.linkText}>Logout</Text>
                         </View>
@@ -74,9 +77,14 @@ const UserProfile = () => {
                            navigation.push("LoginForm");
                         }}
                      >
-                        <View style={[styles.linkButton,{
-                           backgroundColor: COLORS.green
-                        }]}>
+                        <View
+                           style={[
+                              styles.linkButton,
+                              {
+                                 backgroundColor: COLORS.green,
+                              },
+                           ]}
+                        >
                            <Icon style={styles.iconStyle} name="login" />
                            <Text style={styles.linkText}>Login</Text>
                         </View>
@@ -96,18 +104,16 @@ const UserProfile = () => {
                         </Text>
                      </View>
                      <View>
-                        <Text style={styles.quoteText}>
-                           {text}
-                        </Text>
+                        <Text style={styles.quoteText}>{text}</Text>
                         <Text style={styles.quoteAuthor}>{author}</Text>
                      </View>
                   </View>
                )}
             </View>
-      </ScrollView>
-      <SubMenu />
-    </>
-  );
+         </ScrollView>
+         <SubMenu />
+      </>
+   );
 };
 
 const styles = StyleSheet.create({
@@ -130,7 +136,7 @@ const styles = StyleSheet.create({
    dateNow: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 5
+      marginBottom: 5,
    },
    dateIcon: {
       fontSize: 35,
@@ -138,18 +144,18 @@ const styles = StyleSheet.create({
    quoteText: {
       color: COLORS.blue,
       fontSize: 22,
-      fontStyle: "italic"
+      fontStyle: "italic",
    },
    quoteAuthor: {
       color: COLORS.black,
       fontSize: 20,
       fontStyle: "normal",
-      textDecorationLine: "underline"
+      textDecorationLine: "underline",
    },
    innerText: {
       fontWeight: "bold",
       fontSize: 30,
-      width: '50%'
+      width: "50%",
    },
    linkButton: {
       paddingVertical: 10,
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
       justifyContent: "space-evenly",
       alignItems: "center",
       minWidth: 150,
-      width: '50%'
+      width: "50%",
    },
    linkText: {
       color: COLORS.white,
