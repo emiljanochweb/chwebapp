@@ -186,7 +186,7 @@ const RegisterForm = () => {
               <Button title="REGISTER" onPress={submitHandler} />
               <TouchableOpacity
                 style={styles.touch}
-                onPress={() => navigation.navigate("LoginForm")}
+                onPress={() => navigation.push("LoginForm")}
               >
                 <Text style={styles.link}>Already have an account? Login</Text>
               </TouchableOpacity>

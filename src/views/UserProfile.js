@@ -58,7 +58,7 @@ const UserProfile = () => {
                      <TouchableOpacity
                         onPress={() => {
                            dispatch(logout());
-                           navigation.navigate("Home");
+                           navigation.push("Home");
                         }}
                      >
                         <View style={[styles.linkButton, {
@@ -71,7 +71,7 @@ const UserProfile = () => {
                   ) : (
                      <TouchableOpacity
                         onPress={() => {
-                           navigation.navigate("LoginForm");
+                           navigation.push("LoginForm");
                         }}
                      >
                         <View style={[styles.linkButton,{

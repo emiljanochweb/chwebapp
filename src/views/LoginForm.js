@@ -119,7 +119,7 @@ const LoginForm = () => {
               <Button title="LOGIN" onPress={submitHandler} />
               <TouchableOpacity
                 style={styles.touch}
-                onPress={() => navigation.navigate("RegisterForm")}
+                onPress={() => navigation.push("RegisterForm")}
               >
                 <Text style={styles.link}>Create a new account</Text>
               </TouchableOpacity>
