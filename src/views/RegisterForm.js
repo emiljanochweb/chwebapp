@@ -139,7 +139,7 @@ const RegisterForm = () => {
       setUsername("");
       setPassword("");
       setConfirmPassword("");
-      navigation.navigate("UserProfile");
+      navigation.push("UserProfile");
     }
   };
 

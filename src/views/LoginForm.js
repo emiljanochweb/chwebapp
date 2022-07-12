@@ -78,7 +78,7 @@ const LoginForm = () => {
       setUsername("");
       setPassword("");
       dispatch(login(trimmedUsername));
-      navigation.navigate("UserProfile");
+      navigation.push("UserProfile");
     } else {
       Alert.alert("Username or password is incorrent!");
     }
