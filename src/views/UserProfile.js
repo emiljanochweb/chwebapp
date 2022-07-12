@@ -20,12 +20,15 @@ const UserProfile = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
    const username = useSelector((state) => state.login.user);
 
-   const [quotes, setQuotes] = useState([]);
+   const [quote, setQuote] = useState([]);
 
    const getNewQuote = async () => {
       const response = await fetch("https://type.fit/api/quotes");
       const data = await response.json();
-      setQuotes(data);
+
+      let indx = Math.floor(Math.random() * data.length);
+
+      setQuote(data[indx]);
    };
 
    useEffect(() => {
@@ -38,78 +41,74 @@ const UserProfile = () => {
       year: "numeric",
    });
 
-   const indx = Math.floor(Math.random() * quotes.length);
-
-   const { text, author } = quotes.length > 0 && quotes[indx];
+   const { text, author } = quote;
 
    return (
-      <>
-         <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.subContainer}>
-               <View style={styles.logoutContainer}>
-                  <Text style={styles.innerText}>
-                     {username ? capitalizeUsername(username) : "Guest"}
-                  </Text>
-                  {isLoggedIn ? (
-                     <TouchableOpacity
-                        onPress={() => {
-                           dispatch(logout());
-                           navigation.navigate("Home");
-                        }}
+      <ScrollView contentContainerStyle={styles.container}>
+         <View style={styles.subContainer}>
+            <View style={styles.logoutContainer}>
+               <Text style={styles.innerText}>
+                  {username ? capitalizeUsername(username) : "Guest"}
+               </Text>
+               {isLoggedIn ? (
+                  <TouchableOpacity
+                     onPress={() => {
+                        dispatch(logout());
+                        navigation.navigate("Home");
+                     }}
+                  >
+                     <View
+                        style={[
+                           styles.linkButton,
+                           {
+                              backgroundColor: COLORS.red,
+                           },
+                        ]}
                      >
-                        <View
-                           style={[
-                              styles.linkButton,
-                              {
-                                 backgroundColor: COLORS.red,
-                              },
-                           ]}
-                        >
-                           <Icon style={styles.iconStyle} name="logout" />
-                           <Text style={styles.linkText}>Logout</Text>
-                        </View>
-                     </TouchableOpacity>
-                  ) : (
-                     <TouchableOpacity
-                        onPress={() => {
-                           navigation.navigate("LoginForm");
-                        }}
+                        <Icon style={styles.iconStyle} name="logout" />
+                        <Text style={styles.linkText}>Logout</Text>
+                     </View>
+                  </TouchableOpacity>
+               ) : (
+                  <TouchableOpacity
+                     onPress={() => {
+                        navigation.navigate("LoginForm");
+                     }}
+                  >
+                     <View
+                        style={[
+                           styles.linkButton,
+                           {
+                              backgroundColor: COLORS.green,
+                           },
+                        ]}
                      >
-                        <View
-                           style={[
-                              styles.linkButton,
-                              {
-                                 backgroundColor: COLORS.green,
-                              },
-                           ]}
-                        >
-                           <Icon style={styles.iconStyle} name="login" />
-                           <Text style={styles.linkText}>Login</Text>
-                        </View>
-                     </TouchableOpacity>
-                  )}
-               </View>
-               {isLoggedIn && (
-                  <View style={styles.general}>
-                     <View style={styles.dateNow}>
-                        <Icon style={styles.dateIcon} name="calendar-month" />
-                        <Text
-                           style={{
-                              fontSize: 25,
-                           }}
-                        >
-                           {dateNow}
-                        </Text>
+                        <Icon style={styles.iconStyle} name="login" />
+                        <Text style={styles.linkText}>Login</Text>
                      </View>
-                     <View>
-                        <Text style={styles.quoteText}>{text}</Text>
-                        <Text style={styles.quoteAuthor}>{author}</Text>
-                     </View>
-                  </View>
+                  </TouchableOpacity>
                )}
             </View>
-         </ScrollView>
-      </>
+            {isLoggedIn && (
+               <View style={styles.general}>
+                  <View style={styles.dateNow}>
+                     <Icon style={styles.dateIcon} name="calendar-month" />
+                     <Text
+                        style={{
+                           fontSize: 25,
+                        }}
+                     >
+                        {dateNow}
+                     </Text>
+                  </View>
+                  <View>
+                     <Text style={styles.quoteText}>{text}</Text>
+                     <Text style={styles.quoteAuthor}>{author}</Text>
+                  </View>
+               </View>
+            )}
+         </View>
+      </ScrollView>
    );
 };
 
