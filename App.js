@@ -29,6 +29,7 @@ export default function App() {
                   tabBarActiveTintColor: COLORS.blue,
                   tabBarInactiveTintColor: COLORS.white,
                   tabBarActiveBackgroundColor: COLORS.lightBlue,
+                  tabBarHideOnKeyboard: true,
                   tabBarStyle: {
                      backgroundColor: COLORS.blue,
                   },
