@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Airtable from "airtable";
@@ -11,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import COLORS from "../helpers/colors";
@@ -24,7 +25,7 @@ const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
 );
 
 const LoginForm = () => {
-  const isLoggedIn = useSelector((state) => state.login.isLogged);
+  const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,6 +36,14 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [items, setItems] = useState([]);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (isFocused === false) {
+      setErrors({});
+      setUsername("");
+      setPassword("");
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     base("Users")
