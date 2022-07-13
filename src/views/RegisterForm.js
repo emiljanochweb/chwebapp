@@ -144,7 +144,7 @@ const RegisterForm = () => {
         Password: trimmedPassword,
       });
 
-      dispatch(login(trimmedUsername));
+      dispatch(login({username: trimmedUsername, isAdmin: 0}));
       setUsername("");
       setPassword("");
       setConfirmPassword("");

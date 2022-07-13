@@ -8,11 +8,15 @@ import LoginForm from "../views/LoginForm";
 import UserProfile from "../views/UserProfile";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useSelector } from "react-redux";
+import AdminDashboard from "../views/AdminDashboard";
 
 const Tab = createBottomTabNavigator();
 
 const Navigator = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
+   const isAdmin = useSelector((state) => state.login.isAdmin);
+
+   console.warn(isAdmin, 'here')
 
    return (
       <Tab.Navigator
@@ -72,6 +76,19 @@ const Navigator = () => {
                />
             </>
          )}
+         {isAdmin == 1 &&
+            <Tab.Screen
+               name="AdminDashboard"
+               component={AdminDashboard}
+               options={{
+                  title: "Admin",
+                  tabBarShowLabel: false,
+                  tabBarIcon: ({ color, size }) => (
+                     <Icon name="account-supervisor-circle" size={size} color={color} />
+                  ),
+               }}
+            />
+         }
          <Tab.Screen
             name="UserProfile"
             component={UserProfile}

@@ -2,12 +2,12 @@ import { Image, StyleSheet, View } from "react-native";
 import COLORS from "../helpers/colors";
 
 const LogoContainer = ({ name }) => {
-  let path = require("../../assets/logoimage.png");
+  let path = require("../../assets/images/logoimage.png");
   if (name === "RegisterForm") {
-    path = require("../../assets/registration.jpg");
+    path = require("../../assets/images/registration.jpg");
   }
   if (name === "LoginForm") {
-    path = require("../../assets/login.jpg");
+    path = require("../../assets/images/login.jpg");
   }
 
   return (

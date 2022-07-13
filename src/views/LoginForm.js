@@ -85,7 +85,7 @@ const LoginForm = () => {
     if (usernameFound !== undefined && passwordFound !== undefined) {
       setUsername("");
       setPassword("");
-      dispatch(login(trimmedUsername));
+      dispatch(login({username: trimmedUsername, isAdmin: usernameFound.fields.isAdmin}));
       navigation.navigate("UserProfile");
     } else {
       Alert.alert("Username or password is incorrent!");
