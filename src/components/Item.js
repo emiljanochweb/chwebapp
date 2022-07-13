@@ -2,12 +2,11 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import COLORS from '../helpers/colors'
 
-const Item = ({ title, desc}) => {
+const Item = ({ title, desc, id}) => {
   return (
-    <View style={styles.item}>
+    <View style={styles.item} key={id}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.desc}>{desc}</Text>
-        {/* <Image source={require("../../assets/mobile.png")} style={{width: 100, height: 100}} /> */}
     </View>
   )
 }
