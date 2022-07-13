@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native";
 import COLORS from "../helpers/colors";
 
-const Button = ({ title, onPress = () => {} }) => {
+const Button = ({ title, onPress = () => {}, backgroundColor }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -9,7 +9,7 @@ const Button = ({ title, onPress = () => {} }) => {
       style={{
         height: 55,
         width: "100%",
-        backgroundColor: COLORS.blue,
+        backgroundColor: backgroundColor ? backgroundColor : COLORS.blue,
         marginVertical: 20,
         justifyContent: "center",
         alignItems: "center",

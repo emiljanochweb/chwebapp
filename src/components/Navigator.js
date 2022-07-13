@@ -16,8 +16,6 @@ const Navigator = () => {
    const isLoggedIn = useSelector((state) => state.login.isLogged);
    const isAdmin = useSelector((state) => state.login.isAdmin);
 
-   console.warn(isAdmin, 'here')
-
    return (
       <Tab.Navigator
          initialRouteName="Home"
