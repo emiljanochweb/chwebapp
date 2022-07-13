@@ -8,13 +8,15 @@ const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
    "appZpNOdNq1NeGspC"
 );
 
-const UserData = ({ item, id, handleRender, handleModal, handleModalData }) => {
+const UserData = ({ item, id, handleRender, handleModal, handleModalData, handleUpdate }) => {
    const deleteHandler = () => {
       base("Users").destroy(item.id);
       handleRender(true);
    };
 
    const updateHandler = () => {
+        // base("Users").update(item.id, item.fields);
+        handleUpdate(false);
         handleModal(true);
         handleModalData(item.fields);
    };

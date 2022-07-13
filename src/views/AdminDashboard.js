@@ -25,6 +25,7 @@ const AdminDashboard = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [showModal, setShowModal] = useState(false);
    const [modalData, setModalData] = useState({});
+   const [isCreate, setIsCreate] = useState(false);
 
    useEffect(() => {
       setIsLoading(true);
@@ -50,26 +51,58 @@ const AdminDashboard = () => {
       }
    }, [shouldRender]);
 
+   const handleCreate = () => {
+      setShowModal(false);
+      setShouldRender(true);
+
+      base("Users").create({
+         Name: 'iridiontestCreate',
+         Password: 'passwordkoti',
+         isAdmin: "0"
+       });
+   };
+
    return (
       <>
          <Loader visible={isLoading} />
-         <Modal visible={showModal} animationType="fade" transparent={true}>
-            <TouchableOpacity style={styles.modalView} onPress={() => setShowModal(false)}>
+         <Modal
+            visible={showModal}
+            animationType="fade"
+            transparent={true}
+            onRequestClose={() => setShowModal(false)}
+         >
+            <TouchableOpacity
+               style={styles.modalView}
+               onPress={() => setShowModal(false)}
+            >
                <View style={styles.modalContent}>
                   <Text style={styles.modalInputLabel}>Username:</Text>
-                  <TextInput style={styles.modalInput} value={modalData.Name} />
+                  <TextInput style={styles.modalInput} value={isCreate ? '' : modalData.Name} />
 
                   <Text style={styles.modalInputLabel}>Password:</Text>
-                  <TextInput style={styles.modalInput} value={modalData.Password} />
+                  <TextInput
+                     style={styles.modalInput}
+                     value={isCreate ? '' : modalData.Password}
+                  />
 
-                  <Text style={styles.modalInputLabel}>Role (0 - user, 1 - admin):</Text>
-                  <TextInput keyboardType='numeric' style={styles.modalInput} value={modalData.isAdmin} />
+                  <Text style={styles.modalInputLabel}>
+                     Role (0 - user, 1 - admin):
+                  </Text>
+                  <TextInput
+                     keyboardType="numeric"
+                     style={styles.modalInput}
+                     value={isCreate ? '' : modalData.isAdmin}
+                  />
 
-                  <Button title="SAVE" onPress={() => {
-                     console.log("save");
-                     setShowModal(false);
-               }} />
-                  <Button title="CANCEL" onPress={() => setShowModal(false)} backgroundColor={COLORS.red} />
+                  <Button
+                     title="SAVE"
+                     onPress={handleCreate}
+                  />
+                  <Button
+                     title="CANCEL"
+                     onPress={() => setShowModal(false)}
+                     backgroundColor={COLORS.red}
+                  />
                </View>
             </TouchableOpacity>
          </Modal>
@@ -83,9 +116,13 @@ const AdminDashboard = () => {
                   handleRender={setShouldRender}
                   handleModal={setShowModal}
                   handleModalData={setModalData}
+                  handleUpdate={setIsCreate}
                />
             ))}
-            <TouchableOpacity style={styles.touch} onPress={() => {}}>
+            <TouchableOpacity style={styles.touch} onPress={() => {
+               setIsCreate(true);
+               setShowModal(true);
+            }}>
                <Text style={styles.link}>Create a new user</Text>
                <Icon
                   name="account-multiple-plus"
@@ -131,10 +168,10 @@ const styles = StyleSheet.create({
    },
    modalView: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       borderRadius: 5,
       justifyContent: "center",
-      alignContent: 'space-between',
+      alignContent: "space-between",
       paddingHorizontal: 20,
    },
    modalContent: {
@@ -142,17 +179,17 @@ const styles = StyleSheet.create({
       backgroundColor: COLORS.white,
       paddingHorizontal: 20,
       paddingVertical: 50,
-      borderRadius: 10
+      borderRadius: 10,
    },
    modalInput: {
       fontSize: 20,
       marginBottom: 10,
       backgroundColor: COLORS.lightBlue,
       paddingVertical: 5,
-      paddingHorizontal: 10
+      paddingHorizontal: 10,
    },
    modalInputLabel: {
       fontSize: 15,
-      color: COLORS.black
-   }
+      color: COLORS.black,
+   },
 });
