@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Airtable from "airtable";
-import UserData from "../components/UserData";
 import COLORS from "../helpers/colors";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Loader from "../components/Loader";
@@ -24,13 +23,13 @@ const AdminDashboard = () => {
    const [shouldRender, setShouldRender] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [showModal, setShowModal] = useState(false);
-   const [isCreate, setIsCreate] = useState(false);
 
    const [newUsername, setNewUsername] = useState('');
    const [newPassword, setNewPassword] = useState('');
    const [newRole, setNewRole] = useState('0');
 
-   const [modifyItem, setModifyItem] = useState("");
+   const [singleItem, setSingleItem] = useState(null);
+
 
    useEffect(() => {
       setIsLoading(true);
@@ -58,7 +57,10 @@ const AdminDashboard = () => {
          setNewRole("0");
       }
 
-      return () => setShouldRender(false); 
+      return () => {
+         setShouldRender(false);
+         setSingleItem(null);
+      } 
    }, [shouldRender]);
 
    const handleCreate = () => {
@@ -72,6 +74,22 @@ const AdminDashboard = () => {
        });
    };
 
+   const handleUpdate = () => {
+      setShowModal(false);
+      setShouldRender(true);
+
+      base("Users").update(singleItem, {
+         Name: newUsername,
+         Password: newPassword,
+         isAdmin: newRole
+      });
+   }
+
+   const deleteHandler = (id) => {
+      setShouldRender(true);
+
+      base("Users").destroy(id);
+   };
 
    return (
       <>
@@ -112,7 +130,7 @@ const AdminDashboard = () => {
 
                   <Button
                      title="SAVE"
-                     onPress={handleCreate}
+                     onPress={singleItem === null ? handleCreate : handleUpdate}
                   />
                   <Button
                      title="CANCEL"
@@ -125,17 +143,30 @@ const AdminDashboard = () => {
          <ScrollView style={styles.container}>
             <Text style={styles.header}>Admin Dashboard</Text>
             {items.map((item, idx) => (
-               <UserData
-                  key={idx}
-                  item={item}
-                  id={idx}
-                  handleRender={setShouldRender}
-                  handleModal={setShowModal}
-                  handleUpdate={setModifyItem}
-               />
+               <View key={idx} style={styles.allData}>
+                 <View>
+                    <Text>{item.fields.Name}</Text>
+                    <Text>{item.fields.Password}</Text>
+                    <Text>{item.fields.isAdmin}</Text>
+                 </View>
+                 <View style={styles.icons}>
+                    <TouchableOpacity style={{marginRight: 15}} onPress={() => {
+                        setShowModal(true);
+                        setSingleItem(item.id)
+                        setNewUsername(item.fields.Name);
+                        setNewPassword(item.fields.Password);
+                        setNewRole(item.fields.isAdmin);
+                    }
+                  }>
+                       <Icon name="account-edit" size={25} color={COLORS.darkBlue} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => deleteHandler(item.id)}>
+                       <Icon name="delete" size={25} color={COLORS.red} />
+                    </TouchableOpacity>
+                 </View>
+               </View>
             ))}
             <TouchableOpacity style={styles.touch} onPress={() => {
-               setIsCreate(true);
                setShowModal(true);
             }}>
                <Text style={styles.link}>Create a new user</Text>
@@ -207,5 +238,18 @@ const styles = StyleSheet.create({
    modalInputLabel: {
       fontSize: 15,
       color: COLORS.black,
+   },
+   allData: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: COLORS.lightBlue,
+      borderWidth: 1,
+      padding: 5,
+      borderColor: COLORS.darkBlue,
+   },
+   icons: {
+      flexDirection: "row",
+      alignItems: "center",
    },
 });
