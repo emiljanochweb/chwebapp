@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       paddingHorizontal: 15,
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "space-evenly",
       alignItems: "center",
       width: "35%",
    },

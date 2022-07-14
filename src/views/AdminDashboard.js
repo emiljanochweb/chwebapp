@@ -103,6 +103,7 @@ const AdminDashboard = () => {
     setPassword("");
     setUserRole("0");
     setShowModal(false);
+    setSingleItem(null);
   };
 
   return (
@@ -149,6 +150,7 @@ const AdminDashboard = () => {
                 ]}
                 onPress={singleItem === null ? handleCreate : handleUpdate}
               >
+                <Icon name={singleItem === null ? "account-multiple-plus-outline" : "update"} size={20} color={COLORS.white} />
                 <Text style={styles.singleModalButtonText}>
                   {singleItem === null ? "Create" : "Update"}
                 </Text>
@@ -162,6 +164,7 @@ const AdminDashboard = () => {
                 ]}
                 onPress={handleReset}
               >
+                <Icon name="cancel" size={20} color={COLORS.white}/>
                 <Text style={styles.singleModalButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -299,6 +302,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   singleModalButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -308,5 +314,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontSize: 18,
     fontWeight: "bold",
+    marginLeft: 5
   },
 });
