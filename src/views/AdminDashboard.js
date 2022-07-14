@@ -89,7 +89,7 @@ const AdminDashboard = () => {
           setShouldRender(true);
           base("Users").destroy(id);
         }},
-        {text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel'},
+        {text: 'No', onPress: () => {}, style: 'cancel'},
       ],
       { 
         cancelable: true 
@@ -173,9 +173,9 @@ const AdminDashboard = () => {
         {items.map((item, idx) => (
           <View key={idx} style={styles.allData}>
             <View>
-              <Text>{item.fields.Name}</Text>
-              <Text>{item.fields.Password}</Text>
-              <Text>{item.fields.isAdmin}</Text>
+              <Text><Text style={{fontWeight:'bold'}}>Username: </Text>{item.fields.Name}</Text>
+              <Text><Text style={{fontWeight:'bold'}}>Password: </Text>{item.fields.Password}</Text>
+              <Text><Text style={{fontWeight:'bold'}}>Role: </Text>{item.fields.isAdmin}</Text>
             </View>
             <View style={styles.icons}>
               <TouchableOpacity
@@ -243,8 +243,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    borderRadius: 5,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
     justifyContent: "center",
     alignContent: "space-between",
     paddingHorizontal: 20,
