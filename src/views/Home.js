@@ -26,7 +26,6 @@ const Home = () => {
       ListHeaderComponent={
         <View style={styles.container}>
           <LogoContainer name={name} />
-          <View style={styles.subContainer}>
             <Text style={styles.description}>
               Chweb è un'azienda leader nello sviluppo web, specializzata nello
               sviluppo di soluzioni software di frontend, backend e mobile. Un
@@ -38,7 +37,6 @@ const Home = () => {
               flessibili e attenti al dettaglio.
             </Text>
           </View>
-        </View>
       }
     />
   );
@@ -50,10 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: "#fff",
-  },
-  subContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 25,
   },
   description: {
     color: COLORS.darkBlue,
