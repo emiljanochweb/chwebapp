@@ -24,8 +24,13 @@ const AdminDashboard = () => {
    const [shouldRender, setShouldRender] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [showModal, setShowModal] = useState(false);
-   const [modalData, setModalData] = useState({});
    const [isCreate, setIsCreate] = useState(false);
+
+   const [newUsername, setNewUsername] = useState('');
+   const [newPassword, setNewPassword] = useState('');
+   const [newRole, setNewRole] = useState('0');
+
+   const [modifyItem, setModifyItem] = useState("");
 
    useEffect(() => {
       setIsLoading(true);
@@ -48,7 +53,12 @@ const AdminDashboard = () => {
                setIsLoading(false);
                fetchNextPage();
             });
+         setNewUsername("");
+         setNewPassword("");
+         setNewRole("0");
       }
+
+      return () => setShouldRender(false); 
    }, [shouldRender]);
 
    const handleCreate = () => {
@@ -56,11 +66,12 @@ const AdminDashboard = () => {
       setShouldRender(true);
 
       base("Users").create({
-         Name: 'iridiontestCreate',
-         Password: 'passwordkoti',
-         isAdmin: "0"
+         Name: newUsername,
+         Password: newPassword,
+         isAdmin: newRole
        });
    };
+
 
    return (
       <>
@@ -71,18 +82,22 @@ const AdminDashboard = () => {
             transparent={true}
             onRequestClose={() => setShowModal(false)}
          >
-            <TouchableOpacity
+            <View
                style={styles.modalView}
-               onPress={() => setShowModal(false)}
             >
                <View style={styles.modalContent}>
                   <Text style={styles.modalInputLabel}>Username:</Text>
-                  <TextInput style={styles.modalInput} value={isCreate ? '' : modalData.Name} />
+                  <TextInput 
+                     style={styles.modalInput} 
+                     value={newUsername} 
+                     onChangeText={(e) => setNewUsername(e)}
+                  />
 
                   <Text style={styles.modalInputLabel}>Password:</Text>
                   <TextInput
                      style={styles.modalInput}
-                     value={isCreate ? '' : modalData.Password}
+                     value={newPassword}
+                     onChangeText={(e) => setNewPassword(e)}
                   />
 
                   <Text style={styles.modalInputLabel}>
@@ -91,7 +106,8 @@ const AdminDashboard = () => {
                   <TextInput
                      keyboardType="numeric"
                      style={styles.modalInput}
-                     value={isCreate ? '' : modalData.isAdmin}
+                     value={newRole}
+                     onChangeText={(e) => setNewRole(e)}
                   />
 
                   <Button
@@ -104,7 +120,7 @@ const AdminDashboard = () => {
                      backgroundColor={COLORS.red}
                   />
                </View>
-            </TouchableOpacity>
+            </View>
          </Modal>
          <ScrollView style={styles.container}>
             <Text style={styles.header}>Admin Dashboard</Text>
@@ -115,8 +131,7 @@ const AdminDashboard = () => {
                   id={idx}
                   handleRender={setShouldRender}
                   handleModal={setShowModal}
-                  handleModalData={setModalData}
-                  handleUpdate={setIsCreate}
+                  handleUpdate={setModifyItem}
                />
             ))}
             <TouchableOpacity style={styles.touch} onPress={() => {
@@ -173,6 +188,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignContent: "space-between",
       paddingHorizontal: 20,
+      zIndex: 1
    },
    modalContent: {
       justifyContent: "center",
