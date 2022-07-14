@@ -5,9 +5,9 @@ const COLORS = {
   grey: "#BABBC3",
   light: "#F3F4FB",
   darkBlue: "#7978B5",
-  red: "red",
+  red: "#e90000",
   lightBlue: "#e9ecef",
-  green: "#25b33b",
+  green: "#228B22",
   lightRed: "#F7D7DA",
 };
 
