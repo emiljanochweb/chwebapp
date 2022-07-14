@@ -172,10 +172,10 @@ const AdminDashboard = () => {
         <Text style={styles.header}>Admin Dashboard</Text>
         {items.map((item, idx) => (
           <View key={idx} style={styles.allData}>
-            <View>
-              <Text><Text style={{fontWeight:'bold'}}>Username: </Text>{item.fields.Name}</Text>
-              <Text><Text style={{fontWeight:'bold'}}>Password: </Text>{item.fields.Password}</Text>
-              <Text><Text style={{fontWeight:'bold'}}>Role: </Text>{item.fields.isAdmin}</Text>
+            <View style={styles.userDataContainer}>
+              <Text style={styles.userData}><Text style={styles.userDataLabel}>Username: </Text>{item.fields.Name}</Text>
+              <Text style={styles.userData}><Text style={styles.userDataLabel}>Password: </Text>{item.fields.Password}</Text>
+              <Text style={styles.userData}><Text style={styles.userDataLabel}>Role: </Text>{item.fields.isAdmin}</Text>
             </View>
             <View style={styles.icons}>
               <TouchableOpacity
@@ -188,10 +188,10 @@ const AdminDashboard = () => {
                   setUserRole(item.fields.isAdmin);
                 }}
               >
-                <Icon name="account-edit" size={25} color={COLORS.darkBlue} />
+                <Icon name="account-edit" size={30} color={COLORS.darkBlue} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteHandler(item.id, item.fields.Name)}>
-                <Icon name="delete" size={25} color={COLORS.red} />
+                <Icon name="delete-forever" size={30} color={COLORS.red} />
               </TouchableOpacity>
             </View>
           </View>
@@ -276,9 +276,21 @@ const styles = StyleSheet.create({
     padding: 5,
     borderColor: COLORS.darkBlue,
   },
+  userDataContainer: {
+    width: '75%',
+  },
+  userData: {
+    fontSize: 18,
+    marginBottom: 5
+  },
+  userDataLabel: {
+    color: COLORS.darkBlue,
+    fontWeight:'bold',
+  },
   icons: {
     flexDirection: "row",
     alignItems: "center",
+    width: '25%',
   },
   modalButtons: {
     flexDirection: "row",

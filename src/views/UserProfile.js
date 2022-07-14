@@ -52,40 +52,34 @@ const UserProfile = () => {
                </Text>
                {isLoggedIn ? (
                   <TouchableOpacity
+                     style={[
+                        styles.linkButton,
+                        {
+                           backgroundColor: COLORS.red,
+                        },
+                     ]}
                      onPress={() => {
                         dispatch(logout());
-                        navigation.navigate("Home");
+                        navigation.navigate("UserProfile");
                      }}
                   >
-                     <View
-                        style={[
-                           styles.linkButton,
-                           {
-                              backgroundColor: COLORS.red,
-                           },
-                        ]}
-                     >
-                        <Icon style={styles.iconStyle} name="logout" />
-                        <Text style={styles.linkText}>Logout</Text>
-                     </View>
+                     <Icon style={styles.iconStyle} name="logout" />
+                     <Text style={styles.linkText}>Logout</Text>
                   </TouchableOpacity>
                ) : (
                   <TouchableOpacity
+                     style={[
+                        styles.linkButton,
+                        {
+                           backgroundColor: COLORS.green,
+                        },
+                     ]}
                      onPress={() => {
                         navigation.navigate("LoginForm");
                      }}
                   >
-                     <View
-                        style={[
-                           styles.linkButton,
-                           {
-                              backgroundColor: COLORS.green,
-                           },
-                        ]}
-                     >
-                        <Icon style={styles.iconStyle} name="login" />
-                        <Text style={styles.linkText}>Login</Text>
-                     </View>
+                     <Icon style={styles.iconStyle} name="login" />
+                     <Text style={styles.linkText}>Login</Text>
                   </TouchableOpacity>
                )}
             </View>
@@ -151,16 +145,15 @@ const styles = StyleSheet.create({
    innerText: {
       fontWeight: "bold",
       fontSize: 30,
-      width: "50%",
+      width: "65%",
    },
    linkButton: {
       paddingVertical: 10,
       paddingHorizontal: 15,
       flexDirection: "row",
-      justifyContent: "space-evenly",
+      justifyContent: "space-between",
       alignItems: "center",
-      minWidth: 150,
-      width: "50%",
+      width: "35%",
    },
    linkText: {
       color: COLORS.white,
