@@ -1,7 +1,6 @@
 import { useIsFocused } from "@react-navigation/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Airtable from "airtable";
 import { useEffect, useState } from "react";
 import {
   Keyboard,
@@ -22,13 +21,9 @@ import {
   specialCharRegExp,
   uppercaseRegExp,
 } from "../helpers/constants";
-import { keyboardBehaviour } from "../helpers/utils";
+import { base, keyboardBehaviour } from "../helpers/utils";
 import { login } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
-
-const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
-  "appZpNOdNq1NeGspC"
-);
 
 const RegisterForm = () => {
   const isFocused = useIsFocused();
@@ -144,7 +139,7 @@ const RegisterForm = () => {
         Password: trimmedPassword,
       });
 
-      dispatch(login({username: trimmedUsername, isAdmin: 0}));
+      dispatch(login({ username: trimmedUsername, isAdmin: 0 }));
       setUsername("");
       setPassword("");
       setConfirmPassword("");

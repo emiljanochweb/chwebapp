@@ -1,7 +1,6 @@
 import { useIsFocused } from "@react-navigation/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Airtable from "airtable";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -16,13 +15,9 @@ import { useDispatch } from "react-redux";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import COLORS from "../helpers/colors";
-import { keyboardBehaviour } from "../helpers/utils";
+import { base, keyboardBehaviour } from "../helpers/utils";
 import { login } from "../reducers/login";
 import LogoContainer from "./LogoContainer";
-
-const base = new Airtable({ apiKey: "keyhCKeUwLaAVuNWB" }).base(
-  "appZpNOdNq1NeGspC"
-);
 
 const LoginForm = () => {
   const isFocused = useIsFocused();
@@ -85,7 +80,12 @@ const LoginForm = () => {
     if (usernameFound !== undefined && passwordFound !== undefined) {
       setUsername("");
       setPassword("");
-      dispatch(login({username: trimmedUsername, isAdmin: usernameFound.fields.isAdmin}));
+      dispatch(
+        login({
+          username: trimmedUsername,
+          isAdmin: usernameFound.fields.isAdmin,
+        })
+      );
       navigation.navigate("UserProfile");
     } else {
       Alert.alert("Username or password is incorrent!");
