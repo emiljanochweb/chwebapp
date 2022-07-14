@@ -80,10 +80,10 @@ const AdminDashboard = () => {
     });
   };
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (id, name) => {
     Alert.alert(
       'Attention!',
-      'Are you sure you want to delete this user?',
+      `Are you sure you want to delete user ${name}?`,
       [
         {text: 'Yes', onPress: () => {
           setShouldRender(true);
@@ -190,7 +190,7 @@ const AdminDashboard = () => {
               >
                 <Icon name="account-edit" size={25} color={COLORS.darkBlue} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => deleteHandler(item.id)}>
+              <TouchableOpacity onPress={() => deleteHandler(item.id, item.fields.Name)}>
                 <Icon name="delete" size={25} color={COLORS.red} />
               </TouchableOpacity>
             </View>
@@ -202,8 +202,8 @@ const AdminDashboard = () => {
             setShowModal(true);
           }}
         >
-          <Text style={styles.link}>Create a new user</Text>
           <Icon name="account-multiple-plus" size={25} color={COLORS.white} />
+          <Text style={styles.link}>Create new user</Text>
         </TouchableOpacity>
       </ScrollView>
     </>
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   link: {
     color: COLORS.white,
     fontSize: 18,
-    marginRight: 8,
+    marginLeft: 8,
   },
   modalView: {
     flex: 1,
