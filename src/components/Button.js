@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity } from "react-native";
 import COLORS from "../helpers/colors";
 
-const Button = ({ title, onPress = () => {}, backgroundColor }) => {
+const Button = ({ title, onPress, backgroundColor }) => {
   return (
     <TouchableOpacity
       onPress={onPress}

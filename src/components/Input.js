@@ -10,7 +10,6 @@ const Input = ({
   password,
   onChangeText,
   value,
-  onFocus = () => {},
   ...props
 }) => {
   const [hidePassword, setHidePassword] = useState(password);
@@ -39,7 +38,6 @@ const Input = ({
         <TextInput
           autoCorrect={false}
           onFocus={() => {
-            onFocus();
             setIsFocused(true);
           }}
           onBlur={() => setIsFocused(false)}
