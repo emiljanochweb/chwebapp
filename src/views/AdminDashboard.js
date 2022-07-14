@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Modal,
   ScrollView,
   StyleSheet,
@@ -80,9 +81,21 @@ const AdminDashboard = () => {
   };
 
   const deleteHandler = (id) => {
-    setShouldRender(true);
-
-    base("Users").destroy(id);
+    Alert.alert(
+      'Attention!',
+      'Are you sure you want to delete this user?',
+      [
+        {text: 'Yes', onPress: () => {
+          setShouldRender(true);
+          base("Users").destroy(id);
+        }},
+        {text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel'},
+      ],
+      { 
+        cancelable: true 
+      }
+    );
+    
   };
 
   const handleReset = () => {
