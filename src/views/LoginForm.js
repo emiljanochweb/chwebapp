@@ -83,6 +83,8 @@ const LoginForm = () => {
       dispatch(
         login({
           username: trimmedUsername,
+          password: trimmedPassword,
+          id: usernameFound.id,
           isAdmin: usernameFound.fields.isAdmin,
         })
       );

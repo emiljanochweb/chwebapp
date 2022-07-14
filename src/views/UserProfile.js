@@ -2,23 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
+   KeyboardAvoidingView,
    ScrollView,
    StyleSheet,
    Text,
+   TextInput,
    TouchableOpacity,
    View,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
-import { capitalizeUsername } from "../helpers/utils";
+import { base, capitalizeUsername, keyboardBehaviour } from "../helpers/utils";
 import { logout } from "../reducers/login";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const UserProfile = () => {
    const navigation = useNavigation();
    const dispatch = useDispatch();
+   const headerHeight = useHeaderHeight();
 
    const isLoggedIn = useSelector((state) => state.login.isLogged);
    const username = useSelector((state) => state.login.user);
+   const userPassword = useSelector((state) => state.login.password);
+   const userId = useSelector((state) => state.login.id);
+
+   console.warn(userPassword, "pw");
+   console.warn(userId, "uid");
 
    const [quote, setQuote] = useState([]);
 
@@ -43,66 +54,123 @@ const UserProfile = () => {
 
    const { text, author } = quote;
 
+   const [showForm, setShowForm] = useState(false);
+   const [oldPassword, setOldPassword] = useState("");
+   const [newPassword, setNewPassword] = useState("");
+
+   const handleChangePassword = () => {
+      if (userPassword === oldPassword) {
+         if (newPassword.length > 6) {
+            base("Users").update(userId, {
+               Password: newPassword,
+            });
+            setOldPassword("");
+            setNewPassword("");
+            setShowForm(false);
+         }
+      }
+   };
+
    return (
-      <ScrollView contentContainerStyle={styles.container}>
-         <View style={styles.subContainer}>
-            <View style={styles.logoutContainer}>
-               <Text style={styles.innerText}>
-                  {username ? capitalizeUsername(username) : "Guest"}
-               </Text>
-               {isLoggedIn ? (
-                  <TouchableOpacity
-                     style={[
-                        styles.linkButton,
-                        {
-                           backgroundColor: COLORS.red,
-                        },
-                     ]}
-                     onPress={() => {
-                        dispatch(logout());
-                        navigation.navigate("UserProfile");
-                     }}
-                  >
-                     <Icon style={styles.iconStyle} name="logout" />
-                     <Text style={styles.linkText}>Logout</Text>
-                  </TouchableOpacity>
-               ) : (
-                  <TouchableOpacity
-                     style={[
-                        styles.linkButton,
-                        {
-                           backgroundColor: COLORS.green,
-                        },
-                     ]}
-                     onPress={() => {
-                        navigation.navigate("LoginForm");
-                     }}
-                  >
-                     <Icon style={styles.iconStyle} name="login" />
-                     <Text style={styles.linkText}>Login</Text>
-                  </TouchableOpacity>
-               )}
-            </View>
-            {isLoggedIn && (
-               <View style={styles.general}>
-                  <View style={styles.dateNow}>
-                     <Icon style={styles.dateIcon} name="calendar-month" />
-                     <Text
-                        style={{
-                           fontSize: 25,
+      <KeyboardAvoidingView
+         style={styles.container}
+         behavior={keyboardBehaviour}
+         keyboardVerticalOffset={headerHeight}
+      >
+         <ScrollView>
+            <View style={styles.subContainer}>
+               <View style={styles.logoutContainer}>
+                  <Text style={styles.innerText}>
+                     {username ? capitalizeUsername(username) : "Guest"}
+                  </Text>
+                  {isLoggedIn ? (
+                     <TouchableOpacity
+                        style={[
+                           styles.linkButton,
+                           {
+                              backgroundColor: COLORS.red,
+                           },
+                        ]}
+                        onPress={() => {
+                           dispatch(logout());
+                           navigation.navigate("UserProfile");
                         }}
                      >
-                        {dateNow}
-                     </Text>
-                  </View>
-                  <View>
-                     <Text style={styles.quoteText}>{text}</Text>
-                     <Text style={styles.quoteAuthor}>{author}</Text>
-                  </View>
+                        <Icon style={styles.iconStyle} name="logout" />
+                        <Text style={styles.linkText}>Logout</Text>
+                     </TouchableOpacity>
+                  ) : (
+                     <TouchableOpacity
+                        style={[
+                           styles.linkButton,
+                           {
+                              backgroundColor: COLORS.green,
+                           },
+                        ]}
+                        onPress={() => {
+                           navigation.navigate("LoginForm");
+                        }}
+                     >
+                        <Icon style={styles.iconStyle} name="login" />
+                        <Text style={styles.linkText}>Login</Text>
+                     </TouchableOpacity>
+                  )}
                </View>
-            )}
-         </View>
-      </ScrollView>
+               {isLoggedIn && (
+                  <>
+                     <View style={styles.general}>
+                        <View style={styles.dateNow}>
+                           <Icon
+                              style={styles.dateIcon}
+                              name="calendar-month"
+                           />
+                           <Text
+                              style={{
+                                 fontSize: 25,
+                              }}
+                           >
+                              {dateNow}
+                           </Text>
+                        </View>
+                        <View>
+                           <Text style={styles.quoteText}>{text}</Text>
+                           <Text style={styles.quoteAuthor}>{author}</Text>
+                        </View>
+                     </View>
+                     <View>
+                        <Button
+                           title="Change password"
+                           onPress={() => setShowForm(true)}
+                        />
+                        {showForm && (
+                           <View>
+                              <Input
+                                 label="Old Password"
+                                 onChangeText={setOldPassword}
+                                 value={oldPassword}
+                              />
+                              <Input
+                                 label="New Password"
+                                 onChangeText={setNewPassword}
+                                 value={newPassword}
+                              />
+                              <Button
+                                 title="Change"
+                                 onPress={handleChangePassword}
+                              />
+                              <Button
+                                 title="Cancel"
+                                 backgroundColor="red"
+                                 onPress={() => setShowForm(false)}
+                              />
+                           </View>
+                        )}
+                     </View>
+                  </>
+               )}
+            </View>
+         </ScrollView>
+      </KeyboardAvoidingView>
    );
 };
 
@@ -118,7 +186,7 @@ const styles = StyleSheet.create({
    logoutContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "flex-start",
+      // alignItems: "flex-start",
    },
    general: {
       paddingVertical: 20,
@@ -164,6 +232,13 @@ const styles = StyleSheet.create({
    iconStyle: {
       color: COLORS.white,
       fontSize: 20,
+   },
+   passwordButton: {
+      backgroundColor: COLORS.red,
+   },
+   passwordInput: {
+      backgroundColor: COLORS.darkBlue,
+      // marginBottom: 10
    },
 });
 
