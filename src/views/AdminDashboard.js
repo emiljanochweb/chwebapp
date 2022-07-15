@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.darkBlue,
   },
   userDataContainer: {
-    width: "75%",
+    width: "80%",
   },
   userData: {
     fontSize: 18,
@@ -257,7 +257,8 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: "row",
     alignItems: "center",
-    width: "25%",
+    justifyContent: "flex-end",
+    width: "20%",
   },
   modalButtons: {
     flexDirection: "row",

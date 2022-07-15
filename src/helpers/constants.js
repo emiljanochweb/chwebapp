@@ -2,13 +2,13 @@ export const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "Frontend Developer",
-    logo: require("../../assets/images/mobile.png"),
+    logo: require("../../assets/images/frontend.jpg"),
     desc: "Il nostro team di sviluppatori web porta con sé oltre un decennio di esperienza. Dal lavoro su architetture complesse allo sviluppo di applicazioni frontend reattive, il nostro team è abile nel fornire soluzioni web all'avanguardia e ben integrate per la tua azienda.",
   },
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Backend Developer",
-    logo: require("../../assets/images/mobile.png"),
+    logo: require("../../assets/images/backend.jpg"),
     desc: "Lavoriamo con i più recenti stack tecnologici per progettare soluzioni di backend API RESTful seguendo i nostri clienti in tutte le fasi, dalla progettazione all'assistenza post produzione.",
   },
   {
@@ -20,7 +20,7 @@ export const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-6556433322111",
     title: "Digital Marketing",
-    logo: require("../../assets/images/mobile.png"),
+    logo: require("../../assets/images/digital.png"),
     desc: "Soluzioni intelligenti per far crescere la tua Azienda. Inizia oggi un progetto con noi, applicazione mobile, pubblicità Google, Facebook, pubblicità Social, Web applications e Lead Generation.",
   },
 ];
