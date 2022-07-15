@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
    Alert,
+   BackHandler,
    KeyboardAvoidingView,
    ScrollView,
    StyleSheet,
@@ -18,6 +19,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useIsFocused } from "@react-navigation/core";
+import { Platform } from "react-native";
 
 const UserProfile = () => {
    const navigation = useNavigation();
@@ -199,6 +201,25 @@ const UserProfile = () => {
                         )}
                      </View>
                   </>
+               )}
+               {Platform.OS === "android" && (
+                  <TouchableOpacity
+                     style={[
+                        styles.linkButton,
+                        {
+                           backgroundColor: COLORS.red,
+                           alignSelf: 'flex-end',
+                           marginTop: 50
+                        },
+                     ]}
+                     onPress={() => {
+                        BackHandler.exitApp();
+                        dispatch(logout());
+                     }}
+                  >
+                     <Icon style={styles.iconStyle} name="close" />
+                     <Text style={styles.linkText}>EXIT APP</Text>
+                  </TouchableOpacity>
                )}
             </View>
          </ScrollView>
