@@ -13,7 +13,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 import { base, capitalizeUsername, keyboardBehaviour } from "../helpers/utils";
-import { logout } from "../reducers/login";
+import { login, logout } from "../reducers/login";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -29,6 +29,7 @@ const UserProfile = () => {
    const username = useSelector((state) => state.login.user);
    const userPassword = useSelector((state) => state.login.password);
    const userId = useSelector((state) => state.login.id);
+   const userRole = useSelector((state) => state.login.isAdmin);
 
    const [showForm, setShowForm] = useState(false);
    const [oldPassword, setOldPassword] = useState("");
@@ -64,11 +65,21 @@ const UserProfile = () => {
             base("Users").update(userId, {
                Password: newPassword,
             });
+            dispatch(
+               login({
+                  username: username,
+                  password: newPassword,
+                  id: userId,
+                  isAdmin: userRole,
+               })
+            );
             setOldPassword("");
             setNewPassword("");
+            setNewConfirmPassword("");
             setShowForm(false);
+            Alert.alert("Password changed successfully");
          } else Alert.alert("New password is not valid!");
-      }
+      } else Alert.alert("Password is incorrect or they don't match!");
    };
 
    useEffect(() => {

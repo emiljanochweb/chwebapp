@@ -16,7 +16,7 @@ import { base } from "../helpers/utils";
 import { useIsFocused } from "@react-navigation/core";
 
 const AdminDashboard = () => {
-  const isFocused = useIsFocused();
+   const isFocused = useIsFocused();
 
    const [items, setItems] = useState([]);
    const [shouldRender, setShouldRender] = useState(false);
@@ -111,44 +111,41 @@ const AdminDashboard = () => {
       setSingleItem(null);
    };
 
-   const [val, setVal] = useState("");
-   const [newItems, setNewItems] = useState(items);
-
-   const [noResult, setNoResult] = useState(false);
+   const [searchValue, setSearchValue] = useState("");
+   const [users, setUsers] = useState(items);
+   const [notFound, setNotFound] = useState(false);
 
    useEffect(() => {
-      setNewItems(items);
+      setUsers(items);
    }, [items]);
 
    const handleSearch = (value) => {
-      setVal(value);
+      setSearchValue(value);
 
       if (value.length === 0) {
-         setNewItems(items);
+         setUsers(items);
       }
 
       const filteredData = items.filter((item) =>
          item.fields.Name.toLowerCase().includes(value.toLowerCase())
       );
-      console.log(value, "v");
-      console.log(filteredData, "filteredData");
 
       if (filteredData.length === 0) {
-         setNewItems([]);
-         setNoResult(true);
+         setUsers([]);
+         setNotFound(true);
       } else {
-         setNewItems(filteredData);
-         setNoResult(false);
+         setUsers(filteredData);
+         setNotFound(false);
       }
    };
 
    useEffect(() => {
-    if (isFocused === false) {
-       setNoResult(false);
-       setNewItems(items);
-       setVal("");
-    }
- }, [isFocused]);
+      if (isFocused === false) {
+         setNotFound(false);
+         setUsers(items);
+         setSearchValue("");
+      }
+   }, [isFocused]);
 
    return (
       <>
@@ -173,9 +170,9 @@ const AdminDashboard = () => {
                label="Search Users"
                iconName="account-search"
                onChangeText={(e) => handleSearch(e)}
-               value={val}
+               value={searchValue}
             />
-            {newItems.map((item, idx) => (
+            {users.map((item, idx) => (
                <View key={idx} style={styles.allData}>
                   <View style={styles.userDataContainer}>
                      <Text style={styles.userData}>
@@ -220,7 +217,7 @@ const AdminDashboard = () => {
                   </View>
                </View>
             ))}
-            {noResult && (
+            {notFound && (
                <Text style={styles.userNotFound}>User not found!</Text>
             )}
             <TouchableOpacity
