@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Input from "../components/Input";
 import Loader from "../components/Loader";
 import COLORS from "../helpers/colors";
 import { base } from "../helpers/utils";
@@ -106,6 +107,37 @@ const AdminDashboard = () => {
     setSingleItem(null);
   };
 
+  const [val, setVal] = useState("");
+  const [newItems, setNewItems] = useState(items);
+
+  const [noResult, setNoResult] = useState(false);
+
+  useEffect(() => {
+    setNewItems(items);
+  },[items])
+
+  const handleSearch = (value) => {
+    setVal(value);
+
+    if (value.length === 0) {
+      setNewItems(items);
+    }
+
+    const filteredData = items.filter((item) =>
+      item.fields.Name.toLowerCase().includes(value.toLowerCase())
+    );
+    console.log(value,'v');
+    console.log(filteredData,'filteredData');
+
+    if (filteredData.length === 0) {
+      setNewItems([]);
+      setNoResult(true);
+    } else {
+      setNewItems(filteredData);
+      setNoResult(false);
+    }
+  };
+
   return (
     <>
       <Loader visible={isLoading} />
@@ -173,7 +205,13 @@ const AdminDashboard = () => {
       </Modal>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Admin Dashboard</Text>
-        {items.map((item, idx) => (
+        <Input
+            label="Search Users"
+            iconName="account-search"
+            onChangeText={(e) => handleSearch(e)}
+            value={val}
+          />
+        {newItems.map((item, idx) => (
           <View key={idx} style={styles.allData}>
             <View style={styles.userDataContainer}>
               <Text style={styles.userData}><Text style={styles.userDataLabel}>Username: </Text>{item.fields.Name}</Text>
@@ -199,6 +237,7 @@ const AdminDashboard = () => {
             </View>
           </View>
         ))}
+        {noResult && <Text style={styles.userNotFound}>User not found!</Text>}
         <TouchableOpacity
           style={styles.touch}
           onPress={() => {
@@ -317,4 +356,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 5
   },
+  userNotFound: {
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    backgroundColor: COLORS.red,
+    color: COLORS.white,
+    fontSize: 20,
+  }
 });
