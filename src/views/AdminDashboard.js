@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Modal,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import CustomModal from "../components/CustomModal";
 import Input from "../components/Input";
 import Loader from "../components/Loader";
 import COLORS from "../helpers/colors";
@@ -83,20 +82,22 @@ const AdminDashboard = () => {
 
   const deleteHandler = (id, name) => {
     Alert.alert(
-      'Attention!',
+      "Attention!",
       `Are you sure you want to delete user ${name}?`,
       [
-        {text: 'Yes', onPress: () => {
-          setShouldRender(true);
-          base("Users").destroy(id);
-        }},
-        {text: 'No', onPress: () => {}, style: 'cancel'},
+        {
+          text: "Yes",
+          onPress: () => {
+            setShouldRender(true);
+            base("Users").destroy(id);
+          },
+        },
+        { text: "No", onPress: () => {}, style: "cancel" },
       ],
-      { 
-        cancelable: true 
+      {
+        cancelable: true,
       }
     );
-    
   };
 
   const handleReset = () => {
@@ -141,68 +142,20 @@ const AdminDashboard = () => {
   return (
     <>
       <Loader visible={isLoading} />
-      <Modal
-        visible={showModal}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={() => setShowModal(false)}
-      >
-        <View style={styles.modalView}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalInputLabel}>Username:</Text>
-            <TextInput
-              style={styles.modalInput}
-              value={username}
-              onChangeText={(e) => setUsername(e)}
-            />
-
-            <Text style={styles.modalInputLabel}>Password:</Text>
-            <TextInput
-              style={styles.modalInput}
-              value={password}
-              onChangeText={(e) => setPassword(e)}
-            />
-
-            <Text style={styles.modalInputLabel}>
-              Role (0 - user, 1 - admin):
-            </Text>
-            <TextInput
-              keyboardType="numeric"
-              style={styles.modalInput}
-              value={userRole}
-              onChangeText={(e) => setUserRole(e)}
-            />
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[
-                  styles.singleModalButton,
-                  {
-                    backgroundColor: COLORS.green,
-                  },
-                ]}
-                onPress={singleItem === null ? handleCreate : handleUpdate}
-              >
-                <Icon name={singleItem === null ? "account-multiple-plus-outline" : "update"} size={20} color={COLORS.white} />
-                <Text style={styles.singleModalButtonText}>
-                  {singleItem === null ? "Create" : "Update"}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.singleModalButton,
-                  {
-                    backgroundColor: COLORS.red,
-                  },
-                ]}
-                onPress={handleReset}
-              >
-                <Icon name="cancel" size={20} color={COLORS.white}/>
-                <Text style={styles.singleModalButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <CustomModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        userRole={userRole}
+        setUserRole={setUserRole}
+        singleItem={singleItem}
+        handleCreate={handleCreate}
+        handleUpdate={handleUpdate}
+        handleReset={handleReset}
+      />
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Admin Dashboard</Text>
         <Input
@@ -214,9 +167,18 @@ const AdminDashboard = () => {
         {newItems.map((item, idx) => (
           <View key={idx} style={styles.allData}>
             <View style={styles.userDataContainer}>
-              <Text style={styles.userData}><Text style={styles.userDataLabel}>Username: </Text>{item.fields.Name}</Text>
-              <Text style={styles.userData}><Text style={styles.userDataLabel}>Password: </Text>{item.fields.Password}</Text>
-              <Text style={styles.userData}><Text style={styles.userDataLabel}>Role: </Text>{item.fields.isAdmin}</Text>
+              <Text style={styles.userData}>
+                <Text style={styles.userDataLabel}>Username: </Text>
+                {item.fields.Name}
+              </Text>
+              <Text style={styles.userData}>
+                <Text style={styles.userDataLabel}>Password: </Text>
+                {item.fields.Password}
+              </Text>
+              <Text style={styles.userData}>
+                <Text style={styles.userDataLabel}>Role: </Text>
+                {item.fields.isAdmin}
+              </Text>
             </View>
             <View style={styles.icons}>
               <TouchableOpacity
@@ -231,7 +193,9 @@ const AdminDashboard = () => {
               >
                 <Icon name="account-edit" size={30} color={COLORS.darkBlue} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => deleteHandler(item.id, item.fields.Name)}>
+              <TouchableOpacity
+                onPress={() => deleteHandler(item.id, item.fields.Name)}
+              >
                 <Icon name="delete-forever" size={30} color={COLORS.red} />
               </TouchableOpacity>
             </View>
@@ -258,7 +222,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
   },
   header: {
     fontSize: 25,
@@ -283,32 +247,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 8,
   },
-  modalView: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
-    justifyContent: "center",
-    alignContent: "space-between",
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-  modalContent: {
-    justifyContent: "center",
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 20,
-    paddingVertical: 40,
-    borderRadius: 10,
-  },
-  modalInput: {
-    fontSize: 20,
-    marginBottom: 10,
-    backgroundColor: COLORS.lightBlue,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  modalInputLabel: {
-    fontSize: 15,
-    color: COLORS.black,
-  },
   allData: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -319,42 +257,21 @@ const styles = StyleSheet.create({
     borderColor: COLORS.darkBlue,
   },
   userDataContainer: {
-    width: '80%',
+    width: "80%",
   },
   userData: {
     fontSize: 18,
-    marginBottom: 5
+    marginBottom: 5,
   },
   userDataLabel: {
     color: COLORS.darkBlue,
-    fontWeight:'bold',
+    fontWeight: "bold",
   },
   icons: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    width: '20%',
-  },
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  singleModalButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  singleModalButtonText: {
-    color: COLORS.white,
-    textTransform: "uppercase",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginLeft: 5
+    width: "20%",
   },
   userNotFound: {
     paddingHorizontal: 15,
