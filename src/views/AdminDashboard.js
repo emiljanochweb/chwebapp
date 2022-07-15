@@ -8,8 +8,8 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import CustomModal from "../components/CustomModal";
 import Loader from "../components/Loader";
-import ModalTest from "../components/ModalTest";
 import COLORS from "../helpers/colors";
 import { base } from "../helpers/utils";
 
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Loader visible={isLoading} />
-      <ModalTest
+      <CustomModal
         showModal={showModal}
         setShowModal={setShowModal}
         username={username}
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
   },
   header: {
     fontSize: 25,
@@ -208,32 +208,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 8,
   },
-  //   modalView: {
-  //     flex: 1,
-  //     backgroundColor: "rgba(0, 0, 0, 0.8)",
-  //     justifyContent: "center",
-  //     alignContent: "space-between",
-  //     paddingHorizontal: 20,
-  //     zIndex: 1,
-  //   },
-  //   modalContent: {
-  //     justifyContent: "center",
-  //     backgroundColor: COLORS.white,
-  //     paddingHorizontal: 20,
-  //     paddingVertical: 40,
-  //     borderRadius: 10,
-  //   },
-  //   modalInput: {
-  //     fontSize: 20,
-  //     marginBottom: 10,
-  //     backgroundColor: COLORS.lightBlue,
-  //     paddingVertical: 5,
-  //     paddingHorizontal: 10,
-  //   },
-  //   modalInputLabel: {
-  //     fontSize: 15,
-  //     color: COLORS.black,
-  //   },
   allData: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -259,26 +233,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     width: "20%",
-  },
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  singleModalButton: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  singleModalButtonText: {
-    color: COLORS.white,
-    textTransform: "uppercase",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginLeft: 5,
   },
 });

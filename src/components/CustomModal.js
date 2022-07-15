@@ -10,28 +10,41 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import COLORS from "../helpers/colors";
 
-const ModalTest = (props) => {
+const CustomModal = ({
+  showModal,
+  setShowModal,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  userRole,
+  setUserRole,
+  singleItem,
+  handleCreate,
+  handleUpdate,
+  handleReset,
+}) => {
   return (
     <Modal
-      visible={props.showModal}
+      visible={showModal}
       animationType="fade"
       transparent={true}
-      onRequestClose={() => props.setShowModal(false)}
+      onRequestClose={() => setShowModal(false)}
     >
       <View style={styles.modalView}>
         <View style={styles.modalContent}>
           <Text style={styles.modalInputLabel}>Username:</Text>
           <TextInput
             style={styles.modalInput}
-            value={props.username}
-            onChangeText={(e) => props.setUsername(e)}
+            value={username}
+            onChangeText={(e) => setUsername(e)}
           />
 
           <Text style={styles.modalInputLabel}>Password:</Text>
           <TextInput
             style={styles.modalInput}
-            value={props.password}
-            onChangeText={(e) => props.setPassword(e)}
+            value={password}
+            onChangeText={(e) => setPassword(e)}
           />
 
           <Text style={styles.modalInputLabel}>
@@ -40,8 +53,8 @@ const ModalTest = (props) => {
           <TextInput
             keyboardType="numeric"
             style={styles.modalInput}
-            value={props.userRole}
-            onChangeText={(e) => props.setUserRole(e)}
+            value={userRole}
+            onChangeText={(e) => setUserRole(e)}
           />
           <View style={styles.modalButtons}>
             <TouchableOpacity
@@ -51,15 +64,11 @@ const ModalTest = (props) => {
                   backgroundColor: COLORS.green,
                 },
               ]}
-              onPress={
-                props.singleItem === null
-                  ? props.handleCreate
-                  : props.handleUpdate
-              }
+              onPress={singleItem === null ? handleCreate : handleUpdate}
             >
               <Icon
                 name={
-                  props.singleItem === null
+                  singleItem === null
                     ? "account-multiple-plus-outline"
                     : "update"
                 }
@@ -67,7 +76,7 @@ const ModalTest = (props) => {
                 color={COLORS.white}
               />
               <Text style={styles.singleModalButtonText}>
-                {props.singleItem === null ? "Create" : "Update"}
+                {singleItem === null ? "Create" : "Update"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -77,7 +86,7 @@ const ModalTest = (props) => {
                   backgroundColor: COLORS.red,
                 },
               ]}
-              onPress={props.handleReset}
+              onPress={handleReset}
             >
               <Icon name="cancel" size={20} color={COLORS.white} />
               <Text style={styles.singleModalButtonText}>Cancel</Text>
@@ -89,7 +98,7 @@ const ModalTest = (props) => {
   );
 };
 
-export default ModalTest;
+export default CustomModal;
 
 const styles = StyleSheet.create({
   modalView: {
