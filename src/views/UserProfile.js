@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
+   Alert,
    KeyboardAvoidingView,
    ScrollView,
    StyleSheet,
@@ -17,19 +18,23 @@ import { logout } from "../reducers/login";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useIsFocused } from "@react-navigation/core";
 
 const UserProfile = () => {
    const navigation = useNavigation();
    const dispatch = useDispatch();
    const headerHeight = useHeaderHeight();
+   const isFocused = useIsFocused();
 
    const isLoggedIn = useSelector((state) => state.login.isLogged);
    const username = useSelector((state) => state.login.user);
    const userPassword = useSelector((state) => state.login.password);
    const userId = useSelector((state) => state.login.id);
 
-   console.warn(userPassword, "pw");
-   console.warn(userId, "uid");
+   const [showForm, setShowForm] = useState(false);
+   const [oldPassword, setOldPassword] = useState("");
+   const [newPassword, setNewPassword] = useState("");
+   const [newConfirmPassword, setNewConfirmPassword] = useState("");
 
    const [quote, setQuote] = useState([]);
 
@@ -54,12 +59,8 @@ const UserProfile = () => {
 
    const { text, author } = quote;
 
-   const [showForm, setShowForm] = useState(false);
-   const [oldPassword, setOldPassword] = useState("");
-   const [newPassword, setNewPassword] = useState("");
-
    const handleChangePassword = () => {
-      if (userPassword === oldPassword) {
+      if (userPassword === oldPassword && newPassword === newConfirmPassword) {
          if (newPassword.length > 6) {
             base("Users").update(userId, {
                Password: newPassword,
@@ -67,9 +68,18 @@ const UserProfile = () => {
             setOldPassword("");
             setNewPassword("");
             setShowForm(false);
-         }
+         } else Alert.alert("New password is not valid!");
       }
    };
+
+   useEffect(() => {
+      if (isFocused === false) {
+         setShowForm(false);
+         setOldPassword("");
+         setNewPassword("");
+         setNewConfirmPassword("");
+      }
+   }, [isFocused]);
 
    return (
       <KeyboardAvoidingView
@@ -137,30 +147,42 @@ const UserProfile = () => {
                            <Text style={styles.quoteAuthor}>{author}</Text>
                         </View>
                      </View>
-                     <View>
+                     <View style={styles.passwordArea}>
                         <Button
                            title="Change password"
-                           onPress={() => setShowForm(true)}
+                           onPress={() => setShowForm((prev) => !prev)}
                         />
                         {showForm && (
                            <View>
                               <Input
                                  label="Old Password"
+                                 password
+                                 iconName="lock-outline"
                                  onChangeText={setOldPassword}
                                  value={oldPassword}
                               />
                               <Input
                                  label="New Password"
+                                 password
+                                 iconName="lock-outline"
                                  onChangeText={setNewPassword}
                                  value={newPassword}
                               />
+                              <Input
+                                 label="Confirm Password"
+                                 password
+                                 iconName="lock-outline"
+                                 onChangeText={setNewConfirmPassword}
+                                 value={newConfirmPassword}
+                              />
                               <Button
-                                 title="Change"
+                                 title="Confirm"
+                                 backgroundColor={COLORS.green}
                                  onPress={handleChangePassword}
                               />
                               <Button
                                  title="Cancel"
-                                 backgroundColor="red"
+                                 backgroundColor={COLORS.red}
                                  onPress={() => setShowForm(false)}
                               />
                            </View>
@@ -186,7 +208,6 @@ const styles = StyleSheet.create({
    logoutContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      // alignItems: "flex-start",
    },
    general: {
       paddingVertical: 20,
@@ -233,12 +254,8 @@ const styles = StyleSheet.create({
       color: COLORS.white,
       fontSize: 20,
    },
-   passwordButton: {
-      backgroundColor: COLORS.red,
-   },
-   passwordInput: {
-      backgroundColor: COLORS.darkBlue,
-      // marginBottom: 10
+   passwordArea: {
+      padding: 10,
    },
 });
 
